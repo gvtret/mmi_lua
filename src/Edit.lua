@@ -20,20 +20,19 @@ Edit.new = function(props, haveMask, size)
   if _size ~= nil then _size = size end
 
   -- public members
-  self.onBeginEdit = function(sender)
-    if _edited then return end
-    _edited = true
-    if _masked then 
-      _showValue = '>' 
-      _value = ''
-    end    
-  end
-
-  self.onEndEdit = function(sender)
-    _edited = false
+  self.onEnter = function(sender)
+    if not self.getEnable() then return end
+    _edited = not _edited
     if _masked then
-      _showValue = ''
-    end
+      if _edited then 
+        _showValue = '>' 
+        _value = ''
+      else
+        _showValue = ''
+      end
+    end    
+    
+    return true
   end
 
   self.drawText = function()
@@ -41,10 +40,18 @@ Edit.new = function(props, haveMask, size)
   end
 
   self.draw = function(buff)
+    if _edited then
+      buff:clear(color.BLACK, color.GREEN)
+    else
+      buff:clear(color.GREEN, color.BLACK)
+    end
+    buff:printat(1, 1, self.drawText())
   end
 
-  self.onDigit = function(sender, digit)
+  self.onDigit = function(sender, attr)
+    if not self.getEnable() then return end
     if not _edited then return end
+    local digit = attr.name
     if digit == nil or digit == '' then return end
     _value = _value..digit
     
@@ -53,6 +60,7 @@ Edit.new = function(props, haveMask, size)
     else
       _showValue = _showValue..digit
     end
+    return true
   end
   
   self.isEdited = function()
@@ -67,10 +75,25 @@ Edit.new = function(props, haveMask, size)
     return _value
   end
   
-  self.onCancelEdit = function()
+  self.setSize = function(value)
+    if value ~= nil then _size = value end
+  end
+  
+  self.getSize = function(value)
+    return _size
+  end
+  
+  self.onCancelEdit = function(sender, attr)
+    if not self.getEnable() then return end
     _edited = false
     _value = ''
     _showValue = ''
+    return true
+  end
+
+  self.onCancelRepeat = function(sender, attr)
+    if not self.getEnable() then return end
+    return true
   end
 
   -- end

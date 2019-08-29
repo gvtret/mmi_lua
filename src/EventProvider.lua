@@ -24,11 +24,11 @@ EventProvider.new = function(filename, locale)
     for _, _v in pairs(_tree.root.Keymap.Key) do
       if tonumber(_v._attr.scancode) == scancode then
         if type(_v.Pressed) ~= 'table' and _v.Pressed ~= '' then
-          _callback[_v.Pressed].fired = _callback[_v.Pressed].cb(_callback[_v].sender)
+          _callback[_v.Pressed].fired = _callback[_v.Pressed].cb(_callback[_v.Pressed].sender, _v._attr)
         else
           for _k1, _v1 in pairs(_v.Pressed) do
             if _v1 ~= '' and _callback[_v1] ~= nil then
-              _callback[_v1].fired = _callback[_v1].cb(_callback[_v1].sender)
+              _callback[_v1].fired = _callback[_v1].cb(_callback[_v1].sender, _v._attr)
             end
           end
         end
@@ -68,11 +68,11 @@ EventProvider.new = function(filename, locale)
     for _, _v in pairs(_tree.root.Keymap.Key) do
       if tonumber(_v._attr.scancode) == scancode then
         if type(_v.Released) ~= 'table' and _v.Released ~= '' then
-          _callback[_v.Released].fired = _callback_[_v.Released].cb(_callback[_v].sender)
+          _callback[_v.Released].fired = _callback[_v.Released].cb(_callback[_v.Released].sender, _v._attr)
         else
           for _, _v1 in pairs(_v.Released) do
             if _v1 ~= '' and _callback[_v1] ~=nil then
-              _callback[_v1].fired = _callback[_v1].cb(_callback[_v1].sender)
+              _callback[_v1].fired = _callback[_v1].cb(_callback[_v1].sender, _v._attr)
             end
           end
         end

@@ -27,6 +27,15 @@ Text.new = function (props, init_value)
     return s..string.rep(' ', _maxSize - #s)
   end  
 
+  self.draw = function(buff)
+    buff:clear(color.GREEN, color.BLACK)
+    buff:printat(1, 1, self.drawText())
+  end
+
+  self.getSize = function()
+    return _maxSize
+  end
+
   self.setMaxSize = function(max_size)
     if max_size == nil then return end
     _maxSize = max_size

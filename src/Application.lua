@@ -44,12 +44,10 @@ Application.new = function(eventProvider, templEngine)
     _s = _start.._mid.._end
     _gui.printat(1, 1, _s)
     _start = _utf8.char(tblSigns.bold.VERL)
-    _mid = _screen.titleBar.logoIcon.drawText()
-    _mid = _mid.._screen.titleBar.title.drawText()
-    _mid = _mid.._screen.titleBar.ctxIcon.drawText()
+    _gui.printat(1, 2, _start)
+    self.drawTitleBar()
     _end = _utf8.char(tblSigns.bold.VERL)
-    _s = _start.._mid.._end
-    _gui.printat(1, 2, _s)
+    _gui.printat(_screen.width + 2, 2, _end)
     _start = _utf8.char(tblSigns.bold.LCRS)
     _mid = _utf8.char(tblSigns.bold.HORL):rep(64)
     _end = _utf8.char(tblSigns.bold.RCRS)
@@ -71,10 +69,10 @@ Application.new = function(eventProvider, templEngine)
     self.setDescription('datetime')
   
     _start = _utf8.char(tblSigns.bold.VERL)
-    _mid = _screen.statusBar.drawText()
+    _gui.printat(1, 9, _start)
+    self.drawStatusBar()
     _end = _utf8.char(tblSigns.bold.VERL)
-    _s = _start.._mid.._end
-    _gui.printat(1, 9, _s)
+    _gui.printat(_screen.width + 2, 9, _end)
     _start = _utf8.char(tblSigns.bold.LBMC)
     _mid = _utf8.char(tblSigns.bold.HORL):rep(64)
     _end = _utf8.char(tblSigns.bold.RBMC)
@@ -82,33 +80,41 @@ Application.new = function(eventProvider, templEngine)
     _gui.printat(1, 10, _s)
   end
   
+  self._connectEvents = function(object)
+    for k, v in pairs(object) do
+      if k:sub(1,2) == 'on' then
+        _eventProvider.connect(k, v, self)
+      end
+    end
+  end 
+  
   --public members
   self.init = function ()
-    for k, v in pairs(self) do
-      if k:sub(1,2) == 'on' then
-        _eventProvider.connect(k, v, self)
-      end
-    end
     _gui.init()
     _gui.clear(_gui.color.GREEN, _gui.color.BLACK)  
-    _screen.titleBar.logoIcon = Icon.new(nil, 'logo')
-    _screen.titleBar.ctxIcon = Icon.new(nil, 'menu')
-    _screen.titleBar.title = Text.new(nil, 'Main Menu')
-    _screen.titleBar.title.setAlign('center')
-    _screen.titleBar.title.setMaxSize(_screen.width - (_screen.titleBar.logoIcon.getSize() + _screen.titleBar.ctxIcon.getSize()))
+    self._connectEvents(self)
+    _screen.titleBar[1] = Icon.new(nil, 'logo')
+    self._connectEvents(_screen.titleBar[1])
+    _screen.titleBar[3] = Icon.new(nil, 'menu')
+    self._connectEvents(_screen.titleBar[3])
+    _screen.titleBar[2] = Text.new(nil, 'Main Menu')
+    self._connectEvents(_screen.titleBar[2])
+    _screen.titleBar[2].setAlign('center')
+    _screen.titleBar[2].setMaxSize(_screen.width - (_screen.titleBar[1].getSize() + _screen.titleBar[3].getSize()))
     _screen.mainFrame = _templEngine.build('Menu', 'Main menu')
-    _screen.titleBar.ctxIcon.setType(_screen.mainFrame.getItem(1).ref_type)
-    _screen.statusBar = Text.new(nil,'')
-    self.setDescription(_screen.mainFrame.getItem(_screen.mainFrame.getSelectedIndex()).ref.desc)
-    _screen.statusBar.setAlign('center')
-    _screen.statusBar.setMaxSize(_screen.width)
-    for k, v in pairs(_screen.mainFrame) do
-      if k:sub(1,2) == 'on' then
-        _eventProvider.connect(k, v, self)
-      end
-    end
+    self._connectEvents(_screen.mainFrame)
+    _screen.titleBar[3].setType(_screen.mainFrame.getItem(1).ref_type)
+    _screen.statusBar[1] = Text.new(nil,'')
+    self._connectEvents(_screen.statusBar[1])
+    _screen.statusBar[1].setAlign('center')
+    _screen.statusBar[1].setMaxSize(_screen.width)
+    self.setDescription(_screen.mainFrame.getSelectedItem().ref.desc)
   end
-
+  
+  self.stop = function()
+    _gui.shutdown()
+  end
+  
   self.loop = function()
     while _running do
       local evt = _gui.pollevent(1)
@@ -145,17 +151,16 @@ Application.new = function(eventProvider, templEngine)
       _draw()
       _gui.present()
     end
-    _gui.shutdown()
   end
 
   self.setCtxIconType = function(icon_type)
-    _screen.titleBar.ctxIcon.setType(icon_type)
+    _screen.titleBar[3].setType(icon_type)
   end
   
   self.showMenu = function(name)
     _screen.mainFrame = _templEngine.build('Menu', name)
-    _screen.titleBar.title.setValue(_screen.mainFrame.name)
-    self.setDescription(_screen.mainFrame.getItem(_screen.mainFrame.getSelectedIndex()).ref.desc)
+    _screen.titleBar[2].setValue(_screen.mainFrame.name)
+    self.setDescription(_screen.mainFrame.getSelectedItem().ref.desc)
     for k, v in pairs(_screen.mainFrame) do
       if k:sub(1,2) == 'on' then
         _eventProvider.connect(k, v, self)
@@ -164,7 +169,7 @@ Application.new = function(eventProvider, templEngine)
   end
   
   self.setTitle = function(value)
-    _screen.titleBar.title.setValue(value)
+    _screen.titleBar[2].setValue(value)
   end
   
   self.setDescription = function(desc)
@@ -172,7 +177,7 @@ Application.new = function(eventProvider, templEngine)
       if _timers[1] ~= nil then
         _timers[1].stop()
       end
-      _screen.statusBar.setValue(os.date())
+      _screen.statusBar[1].setValue(os.date())
       return
     end
   
@@ -182,10 +187,10 @@ Application.new = function(eventProvider, templEngine)
     end
   
     if desc == 'datetime' and timers_stopped then
-      _screen.statusBar.setValue(os.date())
+      _screen.statusBar[1].setValue(os.date())
       return
     elseif desc ~= 'datetime' or timers_stopped then
-      _screen.statusBar.setValue(desc)
+      _screen.statusBar[1].setValue(desc)
       if _timers[1] == nil then
         _timers[1] = Timer.new(5, self.onTimer1)
         _timers[1].start()
@@ -195,24 +200,56 @@ Application.new = function(eventProvider, templEngine)
     end
   end
 
-  self.checkPermission = function(permission, ok_callback, nok_callback)
+  self.checkPermission = function()
     if _user.checkPermission(permission) then
-      if ok_callback ~= nil then ok_callback(_screen.mainFrame.getSelectedItem().name) end
+      self.showMenu(_screen.mainFrame.getSelectedItem().name)
     else
-      local username = User.getNames(permission)
-      _screen.statusBar = {}
-      _screen.statusBar.promt = Text.new(nil,"Enter "..username..' password: ')
-      _screen.statusBar.promt.setAlign('left')
-      _screen.statusBar.passEdit = Edit.new(nil, true, 6)
-
-      if nok_callback ~= nil then nok_callback() end
+      self.askPassword()
     end
   end  
-  
+
+  self.askPassword = function()
+    local username = User.getNames(permission)
+    _screen.statusBar[1].setValue("Enter "..username..' password: ')
+    _screen.statusBar[1].setAlign('left')
+    _screen.statusBar[1].setMaxSize(_screen.width - 6)
+    _screen.statusBar[2] = Edit.new(nil, true, 6)
+    self._connectEvents(_screen.statusBar[2])
+  end
+
   self.isNotGranted = function()
-    _screen.statusBar.setValue('Invalid password')
+    _screen.statusBar[1].setValue('Invalid password')
   end
   
+  self.drawStatusBar = function()
+    local start_x = 2 -- from second row in line
+    local start_y = 9 -- from second line
+    for _, v in pairs(_screen.statusBar) do
+      if v.getVisible()then
+        local buff = _gui.newbuffer(v.getSize(), 1)
+        v.draw(buff)
+        _gui.blit(start_x, start_y, buff)
+        start_x = start_x + v.getSize()
+      end
+    end 
+  end
+
+  self.drawTitleBar = function()
+    local start_x = 2 -- from second row in line
+    local start_y = 2 -- from second line
+    for _, v in pairs(_screen.titleBar) do
+      if v.getVisible()then
+        local buff = _gui.newbuffer(v.getSize(), 1)
+        v.draw(buff)
+        _gui.blit(start_x, start_y, buff)
+        start_x = start_x + v.getSize()
+      end
+    end 
+  end
+
+  self.drawMainFrame = function()
+  end
+
   self.onTimer1 = function()
     self.setDescription(nil)
     return true

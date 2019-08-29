@@ -36,9 +36,8 @@ Icon.new = function(props, icon_type)
   end
 
   self.draw = function(buff)
-    buff:clear()
+    buff:clear(color.GREEN, color.BLACK)
     buff:printat(1, 1, self.drawText())
-    return buff
   end
 
   self.drawText = function()

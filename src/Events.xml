@@ -13,8 +13,7 @@
     </Key>
     <Key scancode="3" name="enter">
         <Pressed>onShowSubmenu</Pressed>
-        <Pressed>onBeginEdit</Pressed>
-        <Pressed>onEndEdit</Pressed>
+        <Pressed>onEnter</Pressed>
         <Pressed>onButtonPressed</Pressed>
         <Held timeout="1"/>
         <Held timeout="5"/>
@@ -59,57 +58,57 @@
     </Key>
     <Key scancode="9" name="1">
         <Pressed>onShowEventLog</Pressed>
-        <Pressed>onDigit(Key:name)</Pressed>
-        <Held timeout="1">onRepeatDigit(Key:name)</Held>
+        <Pressed>onDigit</Pressed>
+        <Held timeout="1">onRepeatDigit</Held>
         <Released>onCancelRepeat</Released>
     </Key>
     <Key scancode="10" name="2">
         <Pressed>onShowFaultLog</Pressed>
-        <Pressed>onDigit(Key:name)</Pressed>
-        <Held timeout="1">onRepeatDigit(Key:name)</Held>
+        <Pressed>onDigit</Pressed>
+        <Held timeout="1">onRepeatDigit</Held>
         <Released>onCancelRepeat</Released>
     </Key>
     <Key scancode="11" name="3">
         <Pressed>onShowMeData</Pressed>
-        <Pressed>onDigit(Key:name)</Pressed>
-        <Held timeout="1">onRepeatDigit(Key:name)</Held>
+        <Pressed>onDigit</Pressed>
+        <Held timeout="1">onRepeatDigit</Held>
         <Released>onCancelRepeat</Released>
     </Key>
     <Key scancode="12" name="4">
         <Pressed>onAR</Pressed>
-        <Pressed>onDigit(Key:name)</Pressed>
-        <Held timeout="1">onRepeatDigit(Key:name)</Held>
+        <Pressed>onDigit</Pressed>
+        <Held timeout="1">onRepeatDigit</Held>
         <Released>onCancelRepeat</Released>
     </Key>
     <Key scancode="13" name="5">
         <Pressed>onABR</Pressed>
-        <Pressed>onDigit(Key:name)</Pressed>
-        <Held timeout="1">onRepeatDigit(Key:name)</Held>
+        <Pressed>onDigit</Pressed>
+        <Held timeout="1">onRepeatDigit</Held>
         <Released>onCancelRepeat</Released>
     </Key>
     <Key scancode="14" name="6">
         <Pressed>onSEF</Pressed>
-        <Pressed>onDigit(Key:name)</Pressed>
-        <Held timeout="1">onRepeatDigit(Key:name)</Held>
+        <Pressed>onDigit</Pressed>
+        <Held timeout="1">onRepeatDigit</Held>
         <Released>onCancelRepeat</Released>
     </Key>
     <Key scancode="15" name="7">
         <Pressed locale="EN">onEF</Pressed>
         <Pressed locale="RU">onCustom1</Pressed>
-        <Pressed>onDigit(Key:name)</Pressed>
-        <Held timeout="1">onRepeatDigit(Key:name)</Held>
+        <Pressed>onDigit</Pressed>
+        <Held timeout="1">onRepeatDigit</Held>
         <Released>onCancelRepeat</Released>
     </Key>
     <Key scancode="16" name="8">
         <Pressed >onCustom2</Pressed>
-        <Pressed>onDigit(Key:name)</Pressed>
-        <Held timeout="1">onRepeatDigit(Key:name)</Held>
+        <Pressed>onDigit</Pressed>
+        <Held timeout="1">onRepeatDigit</Held>
         <Released>onCancelRepeat</Released>
     </Key>
     <Key scancode="17" name="9">
         <Pressed>onCustom3</Pressed>
-        <Pressed>onDigit(Key:name)</Pressed>
-        <Held timeout="1">onRepeatDigit(Key:name)</Held>
+        <Pressed>onDigit</Pressed>
+        <Held timeout="1">onRepeatDigit</Held>
         <Released>onCancelRepeat</Released>
     </Key>
     <Key scancode="18" name="local">
@@ -119,8 +118,8 @@
     </Key>
     <Key scancode="19" name="0">
         <Pressed locale="EN">onHotLine</Pressed>
-        <Pressed>onDigit(Key:name)</Pressed>
-        <Held timeout="1">onRepeatDigit(Key:name)</Held>
+        <Pressed>onDigit</Pressed>
+        <Held timeout="1">onRepeatDigit</Held>
         <Released>onCancelRepeat</Released>
     </Key>
     <Key scancode="20" name=".">

@@ -13,6 +13,7 @@ local eventProvider = EventProvider.new(eventmap_name)
 app = Application.new(eventProvider, templateEngine)
 app.init()
 local ok, err = pcall(app.loop())
+app.stop()
 
 if not ok then
   print("Error: "..err)

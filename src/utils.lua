@@ -1,3 +1,5 @@
+local tfx = require("termfx")
+
 tblSigns = {
   regular = {
     HORL=0x2500, VERL=0x2502, LTPC=0x250C, RTPC=0x2510,
@@ -10,3 +12,9 @@ tblSigns = {
     TCRS=0x2533, BCRS=0x253B, CCRS=0x254B
     },
   }
+  
+
+color = {
+  GREEN = tfx.color.GREEN,
+  BLACK = tfx.color.BLACK,
+}

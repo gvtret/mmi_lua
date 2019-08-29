@@ -39,13 +39,10 @@ List.new = function(props)
   self.getSelectedIndex = function()
     return _selectedIndex
   end
-<<<<<<< HEAD
-=======
   
   self.getSelectedItem = function()
     return self.getItem(self.getSelectedIndex())
   end
->>>>>>> 0340136dd8b6525a69467fa61dbf4cc5864f33c9
     
   self.make = function(templ, object)
     for _k, _v in pairs(templ._attr) do
@@ -86,6 +83,7 @@ List.new = function(props)
   end
 
   self.onMoveDown = function(sender)
+    if not self.getEnable() then return end
     local _prevIndex = _selectedIndex
     _selectedIndex = _selectedIndex + 1
     if _selectedIndex > #_items then
@@ -105,6 +103,7 @@ List.new = function(props)
   end
 
   self.onMoveUp = function(sender)
+    if not self.getEnable() then return end
     local _prevIndex = _selectedIndex
     _selectedIndex = _selectedIndex - 1
     if _selectedIndex < _minIndex then
@@ -124,16 +123,12 @@ List.new = function(props)
   end
 
   self.onShowSubmenu = function(sender)
-<<<<<<< HEAD
-    sender.showMenu(_items[_selectedIndex].ref.name)
-=======
-    sender.checkPermission(self.getSelectedItem().permission,
-      sender.showMenu,
-      sender.isNotGranted)
->>>>>>> 0340136dd8b6525a69467fa61dbf4cc5864f33c9
+    if not self.getEnable() then return end
+    sender.checkPermission()
   end
   
   self.onExitSubmenu = function(sender)
+    if not self.getEnable() then return end
     for _, _v in pairs(menu_items) do
       if _v.name == _items[_selectedIndex].owner.name then
         sender.showMenu(_v.owner.name)
