@@ -4,6 +4,7 @@ require ('Timer')
 require ('Text')
 require ('List')
 require ('User')
+require ('Edit')
 
 Application = {}
 Application.new = function(eventProvider, templEngine)
@@ -66,7 +67,7 @@ Application.new = function(eventProvider, templEngine)
     _end = _utf8.char(tblSigns.bold.RCRS)
     _s = _start.._mid.._end
     _gui.printat(1, 8, _s)
-    s = string.rep('-',_screen.width)
+    --s = string.rep('-',_screen.width)
     self.setDescription('datetime')
   
     _start = _utf8.char(tblSigns.bold.VERL)
@@ -196,11 +197,21 @@ Application.new = function(eventProvider, templEngine)
 
   self.checkPermission = function(permission, ok_callback, nok_callback)
     if _user.checkPermission(permission) then
-      if ok_callback ~= nil then ok_callback() end
+      if ok_callback ~= nil then ok_callback(_screen.mainFrame.getSelectedItem().name) end
     else
+      local username = User.getNames(permission)
+      _screen.statusBar = {}
+      _screen.statusBar.promt = Text.new(nil,"Enter "..username..' password: ')
+      _screen.statusBar.promt.setAlign('left')
+      _screen.statusBar.passEdit = Edit.new(nil, true, 6)
+
       if nok_callback ~= nil then nok_callback() end
     end
   end  
+  
+  self.isNotGranted = function()
+    _screen.statusBar.setValue('Invalid password')
+  end
   
   self.onTimer1 = function()
     self.setDescription(nil)

@@ -122,8 +122,8 @@ List.new = function(props)
 
   self.onShowSubmenu = function(sender)
     sender.checkPermission(self.getSelectedItem().permission,
-      sender.showMenu(_items[_selectedIndex].ref.name),
-      sender.isNotGranted())
+      sender.showMenu,
+      sender.isNotGranted)
   end
   
   self.onExitSubmenu = function(sender)

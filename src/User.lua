@@ -1,7 +1,17 @@
 require('MmiData')
 
 User = {}
-User.new = function (username)
+User.getNames = function(permissions)
+  local names = {}
+  for k, v in pairs(users) do
+    if bit32.band(permissions, v.id) == v.id then
+      table.insert(names,k)
+    end
+  end
+  return unpack(names)
+end
+
+User.new = function(username)
   --start
   local self = {}
   
