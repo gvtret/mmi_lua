@@ -4,6 +4,7 @@ require ('Timer')
 require ('Text')
 require ('List')
 require ('User')
+require ('Edit')
 
 Application = {}
 Application.new = function(eventProvider, templEngine)
@@ -20,7 +21,7 @@ Application.new = function(eventProvider, templEngine)
   local _running = true
   local _eventProvider = eventProvider
   local _templEngine = templEngine
-  local _user = User.new()
+  local _user = User.new('None')
   local _controlStack = {}
   local _timers = {}
   local _screen = {
@@ -37,46 +38,46 @@ Application.new = function(eventProvider, templEngine)
 
   local _draw = function()
     local _s = ''
-    local _start = utf8.char(tblSigns.bold.LTPC)
-    local _mid = utf8.char(tblSigns.bold.HORL):rep(64)
-    local _end = utf8.char(tblSigns.bold.RTPC)
+    local _start = _utf8.char(tblSigns.bold.LTPC)
+    local _mid = _utf8.char(tblSigns.bold.HORL):rep(64)
+    local _end = _utf8.char(tblSigns.bold.RTPC)
     _s = _start.._mid.._end
     _gui.printat(1, 1, _s)
-    _start = utf8.char(tblSigns.bold.VERL)
+    _start = _utf8.char(tblSigns.bold.VERL)
     _mid = _screen.titleBar.logoIcon.drawText()
     _mid = _mid.._screen.titleBar.title.drawText()
     _mid = _mid.._screen.titleBar.ctxIcon.drawText()
-    _end = utf8.char(tblSigns.bold.VERL)
+    _end = _utf8.char(tblSigns.bold.VERL)
     _s = _start.._mid.._end
     _gui.printat(1, 2, _s)
-    _start = utf8.char(tblSigns.bold.LCRS)
-    _mid = utf8.char(tblSigns.bold.HORL):rep(64)
-    _end = utf8.char(tblSigns.bold.RCRS)
+    _start = _utf8.char(tblSigns.bold.LCRS)
+    _mid = _utf8.char(tblSigns.bold.HORL):rep(64)
+    _end = _utf8.char(tblSigns.bold.RCRS)
     _s = _start.._mid.._end
     _gui.printat(1, 3, _s)
     for _i, _v in ipairs(_screen.mainFrame.drawText()) do
-      _start = utf8.char(tblSigns.bold.VERL)
+      _start = _utf8.char(tblSigns.bold.VERL)
       _mid = _v
-      _end = utf8.char(tblSigns.bold.VERL)
+      _end = _utf8.char(tblSigns.bold.VERL)
       _s = _start.._mid.._end
       _gui.printat(1, 3 + _i, _s)
     end
-    _start = utf8.char(tblSigns.bold.LCRS)
-    _mid = utf8.char(tblSigns.bold.HORL):rep(64)
-    _end = utf8.char(tblSigns.bold.RCRS)
+    _start = _utf8.char(tblSigns.bold.LCRS)
+    _mid = _utf8.char(tblSigns.bold.HORL):rep(64)
+    _end = _utf8.char(tblSigns.bold.RCRS)
     _s = _start.._mid.._end
     _gui.printat(1, 8, _s)
-    s = string.rep('-',_screen.width)
+    --s = string.rep('-',_screen.width)
     self.setDescription('datetime')
   
-    _start = utf8.char(tblSigns.bold.VERL)
+    _start = _utf8.char(tblSigns.bold.VERL)
     _mid = _screen.statusBar.drawText()
-    _end = utf8.char(tblSigns.bold.VERL)
+    _end = _utf8.char(tblSigns.bold.VERL)
     _s = _start.._mid.._end
     _gui.printat(1, 9, _s)
-    _start = utf8.char(tblSigns.bold.LBMC)
-    _mid = utf8.char(tblSigns.bold.HORL):rep(64)
-    _end = utf8.char(tblSigns.bold.RBMC)
+    _start = _utf8.char(tblSigns.bold.LBMC)
+    _mid = _utf8.char(tblSigns.bold.HORL):rep(64)
+    _end = _utf8.char(tblSigns.bold.RBMC)
     _s = _start.._mid.._end
     _gui.printat(1, 10, _s)
   end
@@ -192,6 +193,24 @@ Application.new = function(eventProvider, templEngine)
         _timers[1].start()
       end
     end
+  end
+
+  self.checkPermission = function(permission, ok_callback, nok_callback)
+    if _user.checkPermission(permission) then
+      if ok_callback ~= nil then ok_callback(_screen.mainFrame.getSelectedItem().name) end
+    else
+      local username = User.getNames(permission)
+      _screen.statusBar = {}
+      _screen.statusBar.promt = Text.new(nil,"Enter "..username..' password: ')
+      _screen.statusBar.promt.setAlign('left')
+      _screen.statusBar.passEdit = Edit.new(nil, true, 6)
+
+      if nok_callback ~= nil then nok_callback() end
+    end
+  end  
+  
+  self.isNotGranted = function()
+    _screen.statusBar.setValue('Invalid password')
   end
   
   self.onTimer1 = function()

@@ -1,14 +1,14 @@
 -- Levels of access
 users = {
-  None = {id = 0, hash = ''},
-  Admin = {id = 1, hash = 'd17f25ecfbcc7857f7bebea469308be0b2580943e96d13a3ad98a13675c4bfc2'},
-  System = {id = 2, hash = 'cc399d73903f06ee694032ab0538f05634ff7e1ce5e8e50ac330a871484f34cf'},
-  Prot = {id = 4, hash = '216e683ff0d2d25165b8bb7ba608c9a628ef299924ca49ab981ec7d2fecd6dad'},
-  Comms = {id = 8, hash = 'e11d8cb94b54e0a2fd0e780f93dd51837fd39bf0c9b86f21e760d02a8550ddf7'},
-  Aux5 = {id = 16, hash = 'c507a68f3093e885765257ed3f176c757aaf62bb4cbc2ef94b2e7da3406d9676'},
-  Aux6 = {id = 32, hash = '1a7648bc484b3d9ed9e2226d223a6193d64e5e1fcacd97868adec665fe12b924'},
-  Aux7 = {id = 64, hash = '816e2845d395e7703abac2dcbf9d54e39236fd39133362bf7ad3fce70dd7d78e'},
-  Super = {id = 128, hash = '3d0a234093378eaffc3fe01cd6edbc3cd4302a37457b0c3bb3dd464a52c5a070'},
+  None = {id = -1, hash = ''},
+  Admin = {id = 1, hash = 'd17f25ecfbcc7857f7bebea469308be0b2580943e96d13a3ad98a13675c4bfc2'}, -- pass '11111'
+  System = {id = 2, hash = 'cc399d73903f06ee694032ab0538f05634ff7e1ce5e8e50ac330a871484f34cf'}, -- pass '22222'
+  Prot = {id = 4, hash = '216e683ff0d2d25165b8bb7ba608c9a628ef299924ca49ab981ec7d2fecd6dad'}, -- pass '33333'
+  Comms = {id = 8, hash = 'e11d8cb94b54e0a2fd0e780f93dd51837fd39bf0c9b86f21e760d02a8550ddf7'}, -- pass '44444'
+  Aux5 = {id = 16, hash = 'c507a68f3093e885765257ed3f176c757aaf62bb4cbc2ef94b2e7da3406d9676'}, -- pass '55555'
+  Aux6 = {id = 32, hash = '1a7648bc484b3d9ed9e2226d223a6193d64e5e1fcacd97868adec665fe12b924'}, -- pass '66666'
+  Aux7 = {id = 64, hash = '816e2845d395e7703abac2dcbf9d54e39236fd39133362bf7ad3fce70dd7d78e'}, -- pass '77777'
+  Super = {id = 128, hash = '3d0a234093378eaffc3fe01cd6edbc3cd4302a37457b0c3bb3dd464a52c5a070'}, -- pass '88888'
   }
 
 -- Type of RC
@@ -116,7 +116,7 @@ menus = {
   [1] =  {name = 'Main menu',              rows = 3,  permission = 255, desc = nil},
   [2] =  {name = 'Data indicated via MMI', rows = 6,  permission = 255, desc = 'Man-machine interface'},
   [3] =  {name = 'MMI control data',       rows = 4,  permission = 255, desc = 'Man-machine interface'},
-  [4] =  {name = 'Settings',               rows = 4,  permission = 255, desc = nil},
+  [4] =  {name = 'Settings',               rows = 4,  permission = 2, desc = nil},
   [5] =  {name = 'ME indication data',     rows = 22, permission = 255, desc = 'Measurement element'},
   [6] =  {name = 'IDC',                    rows = 6,  permission = 255, desc = 'Indication data conditioner'},
   [7] =  {name = 'TCI indication data',    rows = 3,  permission = 255, desc = 'Telecommunication interface'},

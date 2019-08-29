@@ -12,4 +12,8 @@ local templateEngine = TemplateEngine.new(templates_name)
 local eventProvider = EventProvider.new(eventmap_name)
 app = Application.new(eventProvider, templateEngine)
 app.init()
-app.loop()
+local ok, err = pcall(app.loop())
+
+if not ok then
+  print("Error: "..err)
+end

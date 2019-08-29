@@ -1,27 +1,41 @@
 require('MmiData')
 
 User = {}
-User.new = function ()
+User.getNames = function(permissions)
+  local names = {}
+  for k, v in pairs(users) do
+    if bit32.band(permissions, v.id) == v.id then
+      table.insert(names,k)
+    end
+  end
+  return unpack(names)
+end
+
+User.new = function(username)
   --start
   local self = {}
   
   local _permission = 0
   local _sha2 = require('hash')
   local _username = 'None'
-  local _userdata = users.None
+  if username ~= nil and username ~= '' then
+    _username = username
+  end
+  
+  local _userdata = users[username]
 
   self.checkPermission= function(permission)
-    if _userdata.permission == nil then
+    if _userdata.id == nil then
       return false
     end
-    if bit32.band(permission, _userdata.permission) == _userdata.permission then
+    if bit32.band(permission, _userdata.id) == _userdata.id then
       return true
     else
       return false
     end
   end
   
-  self.login = function(password)
+  self.logIn = function(password)
     for k, v in pairs(users) do
       if v.hash == _sha2.hash256(password) then
         _username = k
@@ -33,12 +47,12 @@ User.new = function ()
   end
   
   self.logOut = function()
-    _username = ''
-    _userdata = nil
+    _username = 'None'
+    _userdata = users[_username]
   end
   
-  self.getUsername = function()
-    return _username
+  self.getUserName = function(permission)
+    if permission == nil then return _username end
   end
   
   return self

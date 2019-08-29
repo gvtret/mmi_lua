@@ -39,6 +39,13 @@ List.new = function(props)
   self.getSelectedIndex = function()
     return _selectedIndex
   end
+<<<<<<< HEAD
+=======
+  
+  self.getSelectedItem = function()
+    return self.getItem(self.getSelectedIndex())
+  end
+>>>>>>> 0340136dd8b6525a69467fa61dbf4cc5864f33c9
     
   self.make = function(templ, object)
     for _k, _v in pairs(templ._attr) do
@@ -117,7 +124,13 @@ List.new = function(props)
   end
 
   self.onShowSubmenu = function(sender)
+<<<<<<< HEAD
     sender.showMenu(_items[_selectedIndex].ref.name)
+=======
+    sender.checkPermission(self.getSelectedItem().permission,
+      sender.showMenu,
+      sender.isNotGranted)
+>>>>>>> 0340136dd8b6525a69467fa61dbf4cc5864f33c9
   end
   
   self.onExitSubmenu = function(sender)
