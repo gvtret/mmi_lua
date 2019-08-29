@@ -1,0 +1,342 @@
+<!--
+All descriptions are making according to
+10-250_BasicFunctionality.bpd.
+
+TODO: *Change possible values to references like ds:dp
+       (Dataset:Datapoint).
+      *Make different footers for all kind of message or
+       one footer with some kind of reference to message string
+       according to type of it?
+      *The above question for timeout footer.
+-->
+
+<MmiDescription name="MmiTestv1.4">
+
+    <Parameters>
+        <Startup name="MainScreen" class = "Stack"/>
+    </Parameters>
+
+    <EventMap class="Stack">
+        <Key name="Close">OnKeyClose:</Key>
+        <Key name="Trip">OnKeyTrip:</Key>
+        <Key name="Esc">OnKeyEsc:</Key>
+        <Key name="Enter">OnKeyEnter:</Key>
+        <Key name="Up">OnKeyUp:</Key>
+        <Key name="Down">OnKeyDown:</Key>
+        <Key name="Left">OnKeyLeft:</Key>
+        <Key name="Right">OnKeyRight:</Key>
+        <Key name="1">OnKeyEventLog:</Key>
+        <Key name="2">OnKeyMalfLog:</Key>
+        <Key name="3">OnKeyMeData:</Key>
+        <Key name="4">OnKeyAr:</Key>
+        <Key name="5">OnKeyAbr:</Key>
+        <Key name="6">OnKeySef:</Key>
+        <Key name="7">OnKeyEf:</Key>
+        <Key name="8">OnKey8:</Key>
+        <Key name="9">OnKey9:</Key>
+        <Key name="0">OnKeyHl:</Key>
+        <Key name="Mode">OnKeyMode:</Key>
+        <Key name="Dot">OnKeyGroup:</Key>
+    </EventMap>
+
+    <EventMap class="NumEdit">
+        <Key name="1">OnDigit:1</Key>
+        <Key name="2">OnDigit:2</Key>
+        <Key name="3">OnDigit:3</Key>
+        <Key name="4">OnDigit:4</Key>
+        <Key name="5">OnDigit:5</Key>
+        <Key name="6">OnDigit:6</Key>
+        <Key name="7">OnDigit:7</Key>
+        <Key name="8">OnDigit:8</Key>
+        <Key name="9">OnDigit:9</Key>
+        <Key name="0">OnDigit:0</Key>
+        <Key name="Dot">OnDot:</Key>
+        <Key name="Up">OnUp:</Key>
+        <Key name="Down">OnDown:</Key>
+        <Key name="Left">OnLeft:</Key>
+        <Key name="Right">OnRight:</Key>
+        <Key name="Enter">OnEnter:</Key>
+        <Key name="Esc">OnEsc:</Key>
+    </EventMap>
+
+    <EventMap class="EnumEdit">
+        <Key name="Up">OnUp:</Key>
+        <Key name="Down">OnDown:</Key>
+        <Key name="Enter">OnEnter:</Key>
+        <Key name="Esc">OnEsc:</Key>
+    </EventMap>
+
+    <EventMap class="List">
+        <Key name="Up">OnMove:Up</Key>
+        <Key name="Down">OnMove:Down</Key>
+        <Key name="Left">OnMove:First</Key>
+        <Key name="Right">OnMove:Last</Key>
+        <Key name="Esc">OnShow:Parent</Key>
+        <Key name="Enter">OnShow:Child</Key>
+    </EventMap>
+
+    <!--
+    <EventsMap name="Main" context="MmiData....EditNumeric">
+      <Key name="4">
+        Event("OnExit")
+      </Key>
+    </EventsMap>
+    -->
+
+    <!-- Header with Line -->
+    <Stack name="HeaderWide" type="V" lines="2" cols="64" left="0" top="0">
+        <Stack name ="Header" align="center" type="H" lines="1" cols="64" left="0" top="0">
+            <Icon name="StaticIcon" active="true" align="left" lines="1" cols="6" left="0" top="0"/>
+            <Text name="Caption" active="true" align="center" lines="1" cols="51" left="6" top="0">MainMenuList|description</Text>
+            <Icon name="TypeIcon" active="true" align="right" lines="1" cols="6" left="58" top="0"/>
+        </Stack>
+        <Line name="Line1" align="center" active="true" lines="1" cols="64" left="0" top="1"/>
+    </Stack>
+
+    <!-- Header without Line -->
+    <Stack name="HeaderWOLine" type="V" height="25">
+        <Stack name ="Header" align="center" type="H">
+            <Icon name="StaticIcon" display="on" align="left" Description=""/>
+            <Text name="Caption" display="on" align="center" Description="">MainMenuList|description</Text>
+            <Icon name="TypeIcon" display="on" align="right" Description=""/>
+        </Stack>
+    </Stack>
+
+    <!-- Footer Date/Time -->
+    <Stack name="FooterDateTime" type="V" cols="64" lines="2" left="0" top="6">
+        <Line name="Line2" align="center" active="true" cols="64" lines="1" left="0" top="6"/>
+        <Text name="DateTime" align="center" active="true" cols="64" lines="1" left="0" top="7">Time|%Y-%m-%d %H:%M:%S</Text>
+    </Stack>
+
+    <!-- Footer LongDescription -->
+    <Stack name="FooterLongDescription" type="V" cols="64" lines="2" left="0" top="6">
+        <Line name="Line3" align="center" cols="64" lines="1" left="0" top="6"/>
+        <Text name="LongDescription" align="center" cols="64" lines="1" left="0" top="7">item|description</Text>
+    </Stack>
+
+    <!-- Footer Message -->
+    <Stack name="FooterMesssage" type="V" height="25">
+        <Line name="Line2" align="center" Width="1"/>
+        <Text name="Message" display="off" align="center">Wait...</Text>
+        <!-- <Text name="Message" align="center">Incorrect password</Text> -->
+        <!-- <Text name="Message" align="center">Out of range</Text> -->
+        <!-- <Text name="Message" align="center">Successful</Text> -->
+        <!-- <Text name="Message" align="center">Canceled</Text> -->
+        <!-- <Text name="Message" align="center">Invalid</Text> -->
+        <!-- <Text name="Message" align="center">Protection active</Text> -->
+        <!-- <Text name="Message" align="center">Hot line on</Text> -->
+        <!-- <Text name="Message" align="center">Pushbutton mode: disable</Text> -->
+        <!-- <Text name="Message" align="center">Already assigned</Text> -->
+        <!-- <Text name="Message" align="center">Blocked from IOI</Text> -->
+    </Stack>
+
+    <!-- Footer Timeout -->
+    <Stack name="FooterTimeout" type="V" height="25">
+        <Stack name="FooterLine" align="top" type="H">
+            <Line name="Line2" align="center" Width="1"/>
+        </Stack>
+        <Stack name="Footer" align="center" type="H">
+            <Text name="TimeoutMessage" align="right">CLOSE timeout (ESC - abort):</Text>
+            <!-- <Text name="TimeoutMessage" align="right">CLOSE activation timeout:</Text> -->
+            <!-- <Text name="TimeoutMessage" align="right">TRIP activation timeout:</Text> -->
+            <Text name="TimeoutValue" align="left">XXX</Text>
+        </Stack>
+    </Stack>
+
+    <!-- Footer MinMax -->
+    <Stack name="FooterMinMax" type="V" height="25">
+        <Stack name="FooterLine" align="top" type="H">
+            <Line name="Line2" align="center" Width="1"/>
+        </Stack>
+        <Stack name="Footer" align="center" type="H">
+            <Stack name="MinStack" align="left" type="H">
+                <Text name="Min" align="right">Min:</Text>
+                <Text name="MinValue" align="right">{Edit:MinValue}</Text>
+            </Stack>
+            <Stack name="MaxStack" align="right" type="H">
+                <Text name="Max" align="right">Max:</Text>
+                <Text name="MaxValue" align="right">{Edit:MaxValue}</Text>
+            </Stack>
+        </Stack>
+    </Stack>
+
+    <!-- Footer Confirm -->
+    <Stack name="FooterConfirm" type="V" height="25">
+        <Stack name="FooterLine" align="top" type="H">
+            <Line name="Line2" align="center" Width="1"/>
+        </Stack>
+        <Stack name="Footer" align="center" type="H">
+            <Text name="Confirm" align="left">Confirm?</Text>
+            <Button name="YesButton" align="right"/>
+            <Button name="NoButton" align="right"/>
+        </Stack>
+    </Stack>
+
+    <!-- Footer Password Request -->
+    <Stack name="FooterPwdRequest" type="V" height="25">
+        <Stack name="FooterLine" align="top" type="H">
+            <Line name="Line2" align="center" Width="1"/>
+        </Stack>
+        <Stack name="Footer" align="center" type="H">
+            <Text name="PswdRequest" align="left">Enter system password:</Text>
+            <!-- <Text name="PwdRequest" align="left">Enter prot password:</Text> -->
+            <!-- <Text name="PwdRequest" align="left">Enter comms password:</Text> -->
+            <MaskEdit name="PswdEdit" align="right"/>
+        </Stack>
+    </Stack>
+
+    <!-- Main menu -->
+    <Stack name="Menu" align="center" active="true" cols="64" lines="6" left="0" top="2">
+        <List name="MainMenuList" description="Main Menu" align="left"  active="true" cols="62" lines="4" left="0" top="2">
+            <ListItem name="MmiIndicatedData" description="Man-machine interface" ref="MmiIndicatedDataList" active="true" cols="62" lines="1" left="0" top="2">Data indicated via MMI</ListItem>
+            <ListItem name="MmiControlData" description="Man-machine interface" ref="MmiControlDataMenu" cols="62" active="true" lines="1" left="0" top="3">MMI control data</ListItem>
+            <ListItem name="Settings" ref="SettingsMenu" cols="62" lines="1" active="true" left="0" top="4">Settings</ListItem>
+        </List>
+        <ScrollBar name="ListScrollBar" align="right" active="true" max_pos="2" pos="0" cols="1" lines="5" left="63" top="2"/>
+    </Stack>
+
+    <!-- MMI Indicated Data -->
+    <List name="MmiIndicatedDataList" description="Data indicated via MMI" align="left" cols="62" lines="4" left="0" top="2">
+        <ListItem name="Identification" ref="IdList" cols="62" lines="1" left="0" top="2">Identification</ListItem>
+        <ListItem name="MeData" ref="MeDataMenu" description="Measurements element" cols="62" lines="1" left="0" top="3">ME indication data</ListItem>
+        <ListItem name="PseData" ref="PseDataMenu" description="Power supply element" cols="62" lines="1" left="0" top="4">PSE indication data</ListItem>
+        <ListItem name="Idc" ref="IdcMenu" cols="62" description="Indication data conditioner" lines="1" left="0" top="5">IDC</ListItem>
+        <ListItem name="TciData" ref="TciDataMenu" description="Telecommunication interface" cols="62" lines="1" left="0" top="6">TCI indication data</ListItem>
+        <ListItem name="EmData" ref="EmDataMenu" description="Energy meter" cols="62" lines="1" left="0" top="7">EM verification data</ListItem>
+    </List>
+
+    <!-- Identification -->
+    <List name="IdList" align="left" cols="62" lines="4" left="0" top="2">
+        <EnumEdit name="Rc_type" description="Recloser type" cols="62" lines="1" left="0" top="2" enum="Radial">0</EnumEdit>
+        <EnumEdit name="Neutral_type" description="Neutral type" cols="62" lines="1" left="0" top="3" enum="Earthed">0</EnumEdit>
+        <EnumEdit name="Cm_type" description="CM type" cols="62" lines="1" left="0" top="4" enum="15_4/15_5/15_6">2</EnumEdit>
+        <EnumEdit name="Sm_type" description="SM type" cols="62" lines="1" left="0" top="5" enum="ISM15_LD_1/ISM25_LD_1/ISM15_LD8/OSM15_Al1/OSM25_Al1/OSM35_Smart_1">5</EnumEdit>
+        <EnumEdit name="Source_side" description="Source side" cols="62" lines="1" left="0" top="6" enum="X1X2X3/X4X5X6">0</EnumEdit>
+        <EnumEdit name="Source_for_power" description="Source for power" cols="62" lines="1" left="0" top="7" enum="X1X2X3/X4X5X6">0</EnumEdit>
+        <NumEdit name="Lumb" description="Umbilical length" cols="62" lines="1" left="0" top="8" min="0.0" max="20.0">7.0</NumEdit>
+    </List>
+
+    <Stack name="MainScreen" align="center" active="true" cols="64" lines="8" left="0" top="0">
+        <Ref name="HeaderWide" align="top" class="Stack"/>
+        <Ref name="Menu" align="center" class="Stack"/>
+        <Ref name="FooterDateTime" align="bottom" class="Stack"/>
+    </Stack>
+
+    <!-- Event descriptions -->
+    <Events>
+        <!-- Event for list control -->
+        <Control name="List">
+            <OnMove>
+                <Up>
+                    prev_item()
+                    ListScrollBar.move_up()
+                    show_long_desc(3)
+                </Up>
+                <Down>
+                    next_item()
+                    ListScrollBar.move_down()
+                    show_long_desc(3)
+                </Down>
+                <Last>
+                    last_item()
+                    ListScrollBar.move_end()
+                    show_long_desc(3)
+                </Last>
+                <First>
+                    first_item()
+                    ListScrollBar.move_start()
+                    show_long_desc(3)
+                </First>
+            </OnMove>
+            <OnShow>
+                <Parent>
+                    show(parent)
+                </Parent>
+                <Child>
+                    show(ref)
+                </Child>
+            </OnShow>
+        </Control>
+
+        <!-- Event for numeric edit control -->
+        <Control name="NumEdit">
+            <OnDigit>
+                SetPosValue(event.value)
+            </OnDigit>
+            <OnDot>
+                SetDotInPos()
+            </OnDot>
+            <OnUp>
+                IncrementPosValue()
+            </OnUp>
+            <OnDown>
+                DecrementPosValue()
+            </OnDown>
+            <OnLeft>
+                MovePrevPos()
+            </OnLeft>
+            <OnRight>
+                MoveNextPos()
+            </OnRight>
+            <OnEnter>
+                IsEditMode(
+                IsPermitted(
+                SaveValue(),
+                ShowError("Incorrect password")
+                ),
+                IsAllowed(
+                EnterEditMode(),
+                ShowError("Edit is not allowed")
+                )
+                )
+                SetActive(parent)
+            </OnEnter>
+            <OnEsc>
+                ShowMsg("Cancelled")
+                RestoreValue()
+                SetActive(parent)
+            </OnEsc>
+        </Control>
+        <!-- Event for enum edit control -->
+        <Control name="EnumEdit">
+            <OnUp>
+                PrevValue()
+            </OnUp>
+            <OnDown>
+                NextValue()
+            </OnDown>
+            <OnEnter>
+                IsEditMode(
+                IsPermitted(
+                SaveValue(),
+                ShowError("Incorrect password")
+                ),
+                IsAllowed(
+                EnterEditMode(),
+                ShowError("Edit is not allowed")
+                )
+                )
+                SetActive(parent)
+            </OnEnter>
+            <OnEsc>
+                ShowMsg("Cancelled")
+                RestoreValue()
+                SetActive(parent)
+            </OnEsc>
+        </Control>
+    </Events>
+
+    <!-- Macros for events -->
+    <Macros>
+        <!--
+          <Macro Name="IsPermitted" Bind="IsPermitted"/>
+          <Macro Name="IsAllowed" Bind="IsAllowed"/>
+        -->
+        <Macro name="ShowError($text)">
+            SetControl("ErrorMessageText", "Text", $text)
+            SetControl("ErrorMessage!@Parent!@Siblings", "display", "Off")
+            SetControl("ErrorMessageText!@Parent", "display", "On")
+        </Macro>
+    </Macros>
+
+</MmiDescription>

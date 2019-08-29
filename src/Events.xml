@@ -1,0 +1,132 @@
+<Keymap version="0.1">
+    <Key scancode="1" name="close">
+        <Pressed>onClosePressed</Pressed>
+        <Held timeout="1">onCloseHeld</Held>
+        <Held timeout="5">onCloseLongHeld</Held>
+        <Released>onCloseReleased</Released>
+    </Key>
+    <Key scancode="2" name="trip">
+        <Pressed>onTripPressed</Pressed>
+        <Held timeout="1">onTripHeld</Held>
+        <Held timeout="5">onTripLongHeld</Held>
+        <Released>onTripReleased</Released>
+    </Key>
+    <Key scancode="3" name="enter">
+        <Pressed>onShowSubmenu</Pressed>
+        <Pressed>onBeginEdit</Pressed>
+        <Pressed>onEndEdit</Pressed>
+        <Pressed>onButtonPressed</Pressed>
+        <Held timeout="1"/>
+        <Held timeout="5"/>
+        <Released/>
+    </Key>
+    <Key scancode="4" name="esc">
+        <Pressed>onExitSubmenu</Pressed>
+        <Pressed>onCancelEdit</Pressed>
+        <Held timeout="1"/>
+        <Held timeout="5">onMainmenu</Held>
+        <Released/>
+    </Key>
+    <Key scancode="5" name="up">
+        <Pressed>onMoveUp</Pressed>
+        <Pressed>onNextChar</Pressed>
+        <Pressed>onNextValue</Pressed>
+        <Held timeout="1">onMoveFirst</Held>
+        <Held timeout="5"/>
+        <Released/>
+    </Key>
+    <Key scancode="6" name="down">
+        <Pressed>onMoveDown</Pressed>
+        <Pressed>onPrevChar</Pressed>
+        <Pressed>onPrevValue</Pressed>
+        <Held timeout="1">onMoveLast</Held>
+        <Held timeout="5"/>
+        <Released/>
+    </Key>
+    <Key scancode="7" name="left">
+        <Pressed>onMoveLeft</Pressed>
+        <Pressed>onPrevPosition</Pressed>
+        <Held timeout="1">onFirstPosition</Held>
+        <Held timeout="5"/>
+        <Released/>
+    </Key>
+    <Key scancode="8" name="right">
+        <Pressed>onMoveRight</Pressed>
+        <Pressed>onNextPosition</Pressed>
+        <Held timeout="1">onLastPosition</Held>
+        <Held timeout="5"/>
+        <Released/>
+    </Key>
+    <Key scancode="9" name="1">
+        <Pressed>onShowEventLog</Pressed>
+        <Pressed>onDigit(Key:name)</Pressed>
+        <Held timeout="1">onRepeatDigit(Key:name)</Held>
+        <Released>onCancelRepeat</Released>
+    </Key>
+    <Key scancode="10" name="2">
+        <Pressed>onShowFaultLog</Pressed>
+        <Pressed>onDigit(Key:name)</Pressed>
+        <Held timeout="1">onRepeatDigit(Key:name)</Held>
+        <Released>onCancelRepeat</Released>
+    </Key>
+    <Key scancode="11" name="3">
+        <Pressed>onShowMeData</Pressed>
+        <Pressed>onDigit(Key:name)</Pressed>
+        <Held timeout="1">onRepeatDigit(Key:name)</Held>
+        <Released>onCancelRepeat</Released>
+    </Key>
+    <Key scancode="12" name="4">
+        <Pressed>onAR</Pressed>
+        <Pressed>onDigit(Key:name)</Pressed>
+        <Held timeout="1">onRepeatDigit(Key:name)</Held>
+        <Released>onCancelRepeat</Released>
+    </Key>
+    <Key scancode="13" name="5">
+        <Pressed>onABR</Pressed>
+        <Pressed>onDigit(Key:name)</Pressed>
+        <Held timeout="1">onRepeatDigit(Key:name)</Held>
+        <Released>onCancelRepeat</Released>
+    </Key>
+    <Key scancode="14" name="6">
+        <Pressed>onSEF</Pressed>
+        <Pressed>onDigit(Key:name)</Pressed>
+        <Held timeout="1">onRepeatDigit(Key:name)</Held>
+        <Released>onCancelRepeat</Released>
+    </Key>
+    <Key scancode="15" name="7">
+        <Pressed locale="EN">onEF</Pressed>
+        <Pressed locale="RU">onCustom1</Pressed>
+        <Pressed>onDigit(Key:name)</Pressed>
+        <Held timeout="1">onRepeatDigit(Key:name)</Held>
+        <Released>onCancelRepeat</Released>
+    </Key>
+    <Key scancode="16" name="8">
+        <Pressed >onCustom2</Pressed>
+        <Pressed>onDigit(Key:name)</Pressed>
+        <Held timeout="1">onRepeatDigit(Key:name)</Held>
+        <Released>onCancelRepeat</Released>
+    </Key>
+    <Key scancode="17" name="9">
+        <Pressed>onCustom3</Pressed>
+        <Pressed>onDigit(Key:name)</Pressed>
+        <Held timeout="1">onRepeatDigit(Key:name)</Held>
+        <Released>onCancelRepeat</Released>
+    </Key>
+    <Key scancode="18" name="local">
+        <Pressed>onSwitchMode</Pressed>
+        <Held timeout="1"/>
+        <Released/>
+    </Key>
+    <Key scancode="19" name="0">
+        <Pressed locale="EN">onHotLine</Pressed>
+        <Pressed>onDigit(Key:name)</Pressed>
+        <Held timeout="1">onRepeatDigit(Key:name)</Held>
+        <Released>onCancelRepeat</Released>
+    </Key>
+    <Key scancode="20" name=".">
+        <Pressed>onGroupChange</Pressed>
+        <Pressed>onDot</Pressed>
+        <Held timeout="1">onRepeatDot</Held>
+        <Released>onCancelRepeat</Released>
+    </Key>
+</Keymap>
