@@ -18,3 +18,9 @@ color = {
   GREEN = tfx.color.GREEN,
   BLACK = tfx.color.BLACK,
 }
+
+timer_name = {
+  showDesc = 1,
+  cancelled = 2,
+  invalid = 3,
+}

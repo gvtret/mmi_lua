@@ -83,7 +83,7 @@ List.new = function(props)
   end
 
   self.onMoveDown = function(sender)
-    if not self.getEnable() then return end
+    if not self.isFocused() then return end
     local _prevIndex = _selectedIndex
     _selectedIndex = _selectedIndex + 1
     if _selectedIndex > #_items then
@@ -103,7 +103,7 @@ List.new = function(props)
   end
 
   self.onMoveUp = function(sender)
-    if not self.getEnable() then return end
+    if not self.isFocused() then return end
     local _prevIndex = _selectedIndex
     _selectedIndex = _selectedIndex - 1
     if _selectedIndex < _minIndex then
@@ -123,12 +123,12 @@ List.new = function(props)
   end
 
   self.onShowSubmenu = function(sender)
-    if not self.getEnable() then return end
+    if not self.isFocused() then return end
     sender.checkPermission()
   end
   
   self.onExitSubmenu = function(sender)
-    if not self.getEnable() then return end
+    if not self.isFocused() then return end
     for _, _v in pairs(menu_items) do
       if _v.name == _items[_selectedIndex].owner.name then
         sender.showMenu(_v.owner.name)

@@ -58,7 +58,7 @@ TemplateEngine.new = function(filename)
       return nil
     end
   
-    if templ_name == 'Menu' then
+    --if templ_name == 'Menu' then
       local object = _find_object(object_name,menus)
       if object == nil then
         error('Object with specified name was not found')
@@ -68,7 +68,7 @@ TemplateEngine.new = function(filename)
       local menu = List.new()
       menu.make(templ, object)
       return menu
-    end
+    --end
   end
 
   --end

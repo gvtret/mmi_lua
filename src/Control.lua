@@ -5,6 +5,7 @@ Control.new = function(props)
   local _className = 'Control'
   local _visible = true
   local _enable = true
+  local _focused = false
   
   --public members
   if props ~= nil then
@@ -35,6 +36,14 @@ Control.new = function(props)
 
   self.setEnable = function(value)
     if value ~= nil then _enable = value end
+  end
+
+  self.isFocused = function()
+    return _focused
+  end
+
+  self.setFocused = function(value)
+    if value ~= nil then _focused = value end
   end
 
   return self

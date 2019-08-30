@@ -31,6 +31,8 @@ Application.new = function(eventProvider, templEngine)
       mainFrame = {},
       statusBar = {}
   }
+  local _setDateTime = true
+  local _objectPool = {}
 
   local _updateTimers = function()
     for _, _v in pairs(_timers) do _v.update() end
@@ -65,8 +67,7 @@ Application.new = function(eventProvider, templEngine)
     _end = _utf8.char(tblSigns.bold.RCRS)
     _s = _start.._mid.._end
     _gui.printat(1, 8, _s)
-    --s = string.rep('-',_screen.width)
-    self.setDescription('datetime')
+    self.setDateTime()
   
     _start = _utf8.char(tblSigns.bold.VERL)
     _gui.printat(1, 9, _start)
@@ -86,7 +87,20 @@ Application.new = function(eventProvider, templEngine)
         _eventProvider.connect(k, v, self)
       end
     end
+  end
+  
+  self._checkTimers = function(skip_timer)
+    for k, v in pairs(_timers) do
+      if k ~= skip_timer then v.stop() end
+    end
   end 
+  
+  self._inObjectPool = function(object_name)
+    for k, v in pairs(_objectPool) do
+      if k == object_name then return true end
+    end
+    return false
+  end
   
   --public members
   self.init = function ()
@@ -97,11 +111,15 @@ Application.new = function(eventProvider, templEngine)
     self._connectEvents(_screen.titleBar[1])
     _screen.titleBar[3] = Icon.new(nil, 'menu')
     self._connectEvents(_screen.titleBar[3])
-    _screen.titleBar[2] = Text.new(nil, 'Main Menu')
+    _screen.titleBar[2] = Text.new(nil, menus[1].name)
     self._connectEvents(_screen.titleBar[2])
     _screen.titleBar[2].setAlign('center')
     _screen.titleBar[2].setMaxSize(_screen.width - (_screen.titleBar[1].getSize() + _screen.titleBar[3].getSize()))
-    _screen.mainFrame = _templEngine.build('Menu', 'Main menu')
+    if not self._inObjectPool(menus[1].name) then
+      _objectPool[menus[1].name] = _templEngine.build(menus[1].templ, menus[1].name)
+    end
+    _screen.mainFrame = _objectPool[menus[1].name]
+    _screen.mainFrame.setFocused(true)
     self._connectEvents(_screen.mainFrame)
     _screen.titleBar[3].setType(_screen.mainFrame.getItem(1).ref_type)
     _screen.statusBar[1] = Text.new(nil,'')
@@ -158,67 +176,102 @@ Application.new = function(eventProvider, templEngine)
   end
   
   self.showMenu = function(name)
-    _screen.mainFrame = _templEngine.build('Menu', name)
+    if not self._inObjectPool(name) then
+      _objectPool[name] = _templEngine.build(_screen.mainFrame.getSelectedItem().ref.templ, name)
+    end 
+    _screen.mainFrame = _objectPool[name] 
+    _screen.mainFrame.setFocused(true)
     _screen.titleBar[2].setValue(_screen.mainFrame.name)
     self.setDescription(_screen.mainFrame.getSelectedItem().ref.desc)
-    for k, v in pairs(_screen.mainFrame) do
-      if k:sub(1,2) == 'on' then
-        _eventProvider.connect(k, v, self)
-      end
-    end
+    self._connectEvents(_screen.mainFrame)
   end
   
   self.setTitle = function(value)
     _screen.titleBar[2].setValue(value)
   end
   
-  self.setDescription = function(desc)
-    if desc == nil then
-      if _timers[1] ~= nil then
-        _timers[1].stop()
-      end
-      _screen.statusBar[1].setValue(os.date())
-      return
-    end
-  
+  self.setDateTime = function()
     local timers_stopped = true
     for k, v in pairs(_timers) do
       timers_stopped = timers_stopped and v.isStopped()
     end
-  
-    if desc == 'datetime' and timers_stopped then
+
+    if timers_stopped  and _setDateTime then
+      _screen.statusBar[1].setAlign("center")
+      _screen.statusBar[1].setMaxSize(_screen.width)
       _screen.statusBar[1].setValue(os.date())
-      return
-    elseif desc ~= 'datetime' or timers_stopped then
-      _screen.statusBar[1].setValue(desc)
-      if _timers[1] == nil then
-        _timers[1] = Timer.new(5, self.onTimer1)
-        _timers[1].start()
-      else
-        _timers[1].start()
-      end
     end
+  end
+  
+  self.setDescription = function(desc)
+    if desc == nil or desc == '' then 
+      _setDateTime = true
+      self._checkTimers()
+      return
+    end
+    _screen.statusBar[1].setAlign("center")
+    _screen.statusBar[1].setMaxSize(_screen.width)
+    _screen.statusBar[1].setValue(desc)
+    if _timers[timer_name.showDesc] == nil then
+      _timers[timer_name.showDesc] = Timer.new(5, self.onTimerShowDesc)
+    end
+    _timers[timer_name.showDesc].start()
+    self._checkTimers(timer_name.showDesc)
   end
 
   self.checkPermission = function()
-    if _user.checkPermission(permission) then
+    if _user.checkPermission(_screen.mainFrame.getSelectedItem().permission) then
       self.showMenu(_screen.mainFrame.getSelectedItem().name)
     else
-      self.askPassword()
+      self.askPassword(_screen.mainFrame.getSelectedItem().permission)
     end
   end  
 
-  self.askPassword = function()
+  self.askPassword = function(permission)
     local username = User.getNames(permission)
-    _screen.statusBar[1].setValue("Enter "..username..' password: ')
-    _screen.statusBar[1].setAlign('left')
-    _screen.statusBar[1].setMaxSize(_screen.width - 6)
+    _screen.statusBar[1].setValue("Enter "..username.." password: ")
+    _screen.statusBar[1].setAlign("left")
     _screen.statusBar[2] = Edit.new(nil, true, 6)
+    _screen.statusBar[1].setMaxSize(_screen.width - _screen.statusBar[2].getSize())
     self._connectEvents(_screen.statusBar[2])
+    _screen.statusBar[2].setFocused(true)
+    _screen.mainFrame.setFocused(false)
+    _setDateTime = false
   end
-
-  self.isNotGranted = function()
+  
+  self.cancelPassword = function()
+    _screen.statusBar[1].setValue("Cancelled")
+    _screen.statusBar[1].setAlign("center")
+    _screen.statusBar[1].setMaxSize(_screen.width)
+    _screen.statusBar[2].setFocused(false)
+    _screen.mainFrame.setFocused(true)
+    if _timers[timer_name.cancelled] == nil then
+      _timers[timer_name.cancelled] = Timer.new(1, self.onTimerCancelled)
+    end
+    _timers[timer_name.cancelled].start()
+    self._checkTimers(timer_name.cancelled)
+  end
+  
+  self.loginUser = function(password)
+    _screen.statusBar[2].setFocused(false)
+    _screen.mainFrame.setFocused(true)
+    if _user.logIn(password) then
+      self.checkPermission()
+    else
+      self.wrongPassword()
+    end
+  end
+  
+  self.wrongPassword = function()
     _screen.statusBar[1].setValue('Invalid password')
+    _screen.statusBar[1].setAlign("center")
+    _screen.statusBar[1].setMaxSize(_screen.width)
+    if _timers[timer_name.invalid] == nil then
+      _timers[timer_name.invalid] = Timer.new(1, self.onTimerInvalid)
+    end
+    _timers[timer_name.invalid].start()
+    self._checkTimers(timer_name.invalid)
+    
   end
   
   self.drawStatusBar = function()
@@ -250,10 +303,24 @@ Application.new = function(eventProvider, templEngine)
   self.drawMainFrame = function()
   end
 
-  self.onTimer1 = function()
-    self.setDescription(nil)
+  self.onTimerCancelled = function()
+    _timers[timer_name.cancelled].stop()
+    _setDateTime = true
     return true
   end
+
+  self.onTimerInvalid = function()
+    _timers[timer_name.invalid].stop()
+    _setDateTime = true
+    return true
+  end
+  
+  self.onTimerShowDesc = function()
+    _timers[timer_name.showDesc].stop()
+    _setDateTime = true
+    return true
+  end
+
   --end
   return self
 end

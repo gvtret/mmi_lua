@@ -1,5 +1,8 @@
 package.path = package.path..';./src/?.lua'..';./src/xml2lua/?.lua'..';./src/u-test/?.lua'..';./src/utf8/?.lua'
-require('debugger')()
+
+if DEBUG then
+  require('debugger')()
+end
 
 require ('Application')
 require ('EventProvider')

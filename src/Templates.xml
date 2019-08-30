@@ -4,7 +4,7 @@ all %...% will be filled with data when expanding the template to display
 <Templates version="0.1">
 <!-- Menu one level -->
 	<Menu name="%name%" rows="%rows%" permission="%permission%">
-		<Row name="%name%" align="left" ref="%ref%" permission="%permission%"/>
+		<Row name="%name%" align="left" ref="%ref%" permission="%permission%" templ="%templ%"/>
 	</Menu>
 <!-- Table with row description -->
 	<Table name="%name%" rows="%rows%" permission="%permission%">
@@ -16,10 +16,7 @@ all %...% will be filled with data when expanding the template to display
 	</Table>
 <!-- Settings with row description -->
 	<Settings name="%name%" rows="%rows%" permission="%permission%">
-		<Row permission="%permission%">
-			<Param value="%description%" align="left"/>
-			<Param value="%value%" align="right"/>
-		</Row>
+		<Row name = "%name%" type = "%type%" desription = "%desription%" permission="%permission%" units = "%units%" value = "%value%" range = "%range%"/>
 	</Settings>
 <!-- Commands with row description -->
 	<Commands name="%name%" rows="%rows%" permission="%permission%">
