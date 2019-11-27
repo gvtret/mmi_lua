@@ -3,6 +3,7 @@
 	<name>mmi_lua</name>
 	<comment></comment>
 	<projects>
+		<project>cpm</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
