@@ -1,5 +1,5 @@
 ---Builder - create and manage tree of controls
-require ("Control")
+local Control = require ("Control")
 require ("Stack")
 require ("List")
 require ("ListItem")

@@ -5,7 +5,7 @@ require ('List')
 require ('User')
 require ('Edit')
 
-Application = {}
+local Application = {}
 Application.new = function(eventProvider, templEngine, connection)
   --start
   local self = {}
@@ -281,6 +281,8 @@ Application.new = function(eventProvider, templEngine, connection)
   --end
   return self
 end
+
+return Application
 
 
 
