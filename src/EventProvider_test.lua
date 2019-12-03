@@ -1,7 +1,6 @@
 package.path = package.path..';./src/?.lua'..';./src/xml2lua/?.lua'..';./src/u-test/?.lua'
-require('EventProvider')
+local eventProvider = require('EventProvider')
 local test = require ('u-test.u-test')
-local eventProvider = nil
 local eventmap_name = 'src/Events.xml'
 
 --- Scancodes for keys

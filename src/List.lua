@@ -1,5 +1,5 @@
 -- List class
-require("Control")
+local Control = require("Control")
 require("ListItem")
 
 List = {}

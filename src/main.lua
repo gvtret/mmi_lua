@@ -1,12 +1,11 @@
 package.path = package.path..';./src/?.lua'..';./src/xml2lua/?.lua'..';./src/u-test/?.lua'..';./src/utf8/?.lua'
-require('mobdebug').start()
 if DEBUG then
     require('debugger')()
 end
 
 local Application = require ('Application')
-require ('EventProvider')
-require ('TemplateEngine')
+local EventProvider = require ('EventProvider')
+local TemplateEngine = require ('TemplateEngine')
 require ('MmiData')
 
 local socket = require('socket')

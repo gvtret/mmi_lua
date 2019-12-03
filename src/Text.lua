@@ -1,5 +1,5 @@
 -- Text class
-require("Control")
+local Control = require("Control")
 
 Text = {}
 Text.new = function (props, init_value)

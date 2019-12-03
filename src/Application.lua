@@ -2,7 +2,7 @@ require ('Icon')
 require ('Timer')
 require ('Text')
 require ('List')
-require ('User')
+local User = require ('User')
 require ('Edit')
 
 local Application = {}
@@ -90,14 +90,16 @@ Application.new = function(eventProvider, templEngine, connection)
   
   self.loop = function()
     while _running do
-        data = string.pack('s4', 0x01, 0x02, 0x03, 0x04) 
-        
-        bytes, err = connection:send(data)
-        data, err = _connection:receive()
+        local struct = require('struct')
+        local data = string.char(0x02)..'some_text!' 
+        local data_fmt = 'Hc'..tostring(#data)        
+        local bytes, err = connection:send(struct.pack(data_fmt, #data, data))
+        local data_str, err = _connection:receive('*a|3')
         if err ~= nil then
           print(err)
+          break
         else
-          print(data)
+          print(data_str)
         end        
 --        if evt.key == _gui.key.ESC then _eventProvider.loop(4)
 --        elseif evt.key == _gui.key.ENTER then _eventProvider.loop(3)
@@ -169,11 +171,11 @@ Application.new = function(eventProvider, templEngine, connection)
     _screen.statusBar[1].setAlign("center")
     _screen.statusBar[1].setMaxSize(_screen.width)
     _screen.statusBar[1].setValue(desc)
-    if _timers[timer_name.showDesc] == nil then
-      _timers[timer_name.showDesc] = Timer.new(5, self.onTimerShowDesc)
+    if _timers['TimerShowDesc'] == nil then
+      _timers['TimerShowDesc'] = Timer.new(5, self.onTimerShowDesc)
     end
-    _timers[timer_name.showDesc].start()
-    self._checkTimers(timer_name.showDesc)
+    _timers['TimerShowDesc'].start()
+    self._checkTimers('TimerShowDesc')
   end
 
   self.checkPermission = function()
@@ -202,11 +204,11 @@ Application.new = function(eventProvider, templEngine, connection)
     _screen.statusBar[1].setMaxSize(_screen.width)
     _screen.statusBar[2].setFocused(false)
     _screen.mainFrame.setFocused(true)
-    if _timers[timer_name.cancelled] == nil then
-      _timers[timer_name.cancelled] = Timer.new(1, self.onTimerCancelled)
+    if _timers['TimerCancelled'] == nil then
+      _timers['TimerCancelled'] = Timer.new(1, self.onTimerCancelled)
     end
-    _timers[timer_name.cancelled].start()
-    self._checkTimers(timer_name.cancelled)
+    _timers['TimerCancelled'].start()
+    self._checkTimers('TimerCancelled')
   end
   
   self.loginUser = function(password)
@@ -223,11 +225,11 @@ Application.new = function(eventProvider, templEngine, connection)
     _screen.statusBar[1].setValue('Invalid password')
     _screen.statusBar[1].setAlign("center")
     _screen.statusBar[1].setMaxSize(_screen.width)
-    if _timers[timer_name.invalid] == nil then
-      _timers[timer_name.invalid] = Timer.new(1, self.onTimerInvalid)
+    if _timers['TimerInvalid'] == nil then
+      _timers['TimerInvalid'] = Timer.new(1, self.onTimerInvalid)
     end
-    _timers[timer_name.invalid].start()
-    self._checkTimers(timer_name.invalid)
+    _timers['TimerInvalid'].start()
+    self._checkTimers('TimerInvalid')
     
   end
   
@@ -261,19 +263,19 @@ Application.new = function(eventProvider, templEngine, connection)
   end
 
   self.onTimerCancelled = function()
-    _timers[timer_name.cancelled].stop()
+    _timers['TimerCancelled'].stop()
     _setDateTime = true
     return true
   end
 
   self.onTimerInvalid = function()
-    _timers[timer_name.invalid].stop()
+    _timers['TimerInvalid'].stop()
     _setDateTime = true
     return true
   end
   
   self.onTimerShowDesc = function()
-    _timers[timer_name.showDesc].stop()
+    _timers['TimerShowDesc'].stop()
     _setDateTime = true
     return true
   end
