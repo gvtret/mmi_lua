@@ -1,0 +1,48 @@
+<!--
+all %...% will be filled with data when expanding the template to display
+-->
+<Templates version="0.1">
+<!-- Menu one level -->
+	<Menu name="%name%" rows="%rows%" permission="%permission%">
+		<Row name="%name%" align="left" ref="%ref%" permission="%permission%" templ="%templ%"/>
+	</Menu>
+<!-- Table with row description -->
+	<Table name="%name%" rows="%rows%" permission="%permission%">
+		<Row permission="%permission%">
+			<Param value="%description%" align="left"/>
+			<Param value="%eu_name%" align="left"/>
+			<Param value="%value%" align="right"/>
+		</Row>
+	</Table>
+<!-- Settings with row description -->
+	<Settings name="%name%" rows="%rows%" permission="%permission%">
+		<Row name = "%name%" type = "%type%" desription = "%desription%" permission="%permission%" units = "%units%" value = "%value%" range = "%range%"/>
+	</Settings>
+<!-- Commands with row description -->
+	<Commands name="%name%" rows="%rows%" permission="%permission%">
+		<Row permission="%permission%">
+			<Param value="%description%" align="left"/>
+			<Param command = "%command%"/>
+		</Row>
+	</Commands>
+<!-- Mixed commands and settings view with row description -->
+	<Mixed name="%name%" set_rows="%set_rows%" cmd_rows="%cmd_rows%" permission="%permission%">
+		<SetRow permission="%permission%">
+			<Param value="%description%" align="left"/>
+			<Param value="%value%" align="right"/>
+		</SetRow>
+		<CmdRow permission="%permission%">
+			<Param value="%description%" align="left"/>
+			<Param command = "%command%"/>
+		</CmdRow>
+	</Mixed>
+<!-- Log with row description -->
+	<Log name="%name%" permission="%permission%">
+        <Row permission="%permission%">
+            <Param active="%active%" align="left"/>
+            <Param addinfo="%add_info%" align="left"/>
+            <Param value="%value%" align="left"/>
+            <Param ref="%add_info_ref%"/>
+        </Row>
+    </Log>
+</Templates>

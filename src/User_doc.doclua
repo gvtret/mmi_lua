@@ -1,0 +1,14 @@
+-------------------------------------------------------------------------------
+-- Create user and check permissions on it.
+-- @type User
+
+-------------------------------------------------------------------------------
+-- Creates instance of user.
+-- @function [#parent=User] new
+-- @param #string username
+
+-------------------------------------------------------------------------------
+-- Integer id of permission for current user.
+-- @field [#parent=User] #number _permission
+
+return nil
