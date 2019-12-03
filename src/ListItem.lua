@@ -1,5 +1,5 @@
 -- ListItem class
-require("Control")
+local Control = require("Control")
 
 ListItem = {}
 ListItem.new = function(props)

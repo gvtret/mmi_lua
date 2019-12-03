@@ -1,4 +1,4 @@
-require('Control')
+local Control = require('Control')
 
 Icon = {}
 Icon.new = function(props, icon_type)

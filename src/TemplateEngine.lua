@@ -2,7 +2,7 @@ require('List')
 local xml2lua = require('xml2lua.xml2lua')
 local tree = require('xml2lua.xmlhandler.tree')
 
-TemplateEngine = {}
+local TemplateEngine = {}
 TemplateEngine.new = function(filename)
   --start
   local self = {}
@@ -75,4 +75,4 @@ TemplateEngine.new = function(filename)
   return self
 end
 
-
+return TemplateEngine

@@ -1,59 +1,61 @@
 require('MmiData')
 
-User = {}
+local User = {}
 User.getNames = function(permissions)
-  local names = {}
-  for k, v in pairs(users) do
-    if bit32.band(permissions, v.id) == v.id then
-      table.insert(names,k)
+    local names = {}
+    for k, v in pairs(users) do
+        if bit32.band(permissions, v.id) == v.id then
+            table.insert(names,k)
+        end
     end
-  end
-  return unpack(names)
+    return unpack(names)
 end
 
 User.new = function(username)
-  --start
-  local self = {}
-  
-  local _permission = 0
-  local _sha2 = require('hash')
-  local _username = 'None'
-  if username ~= nil and username ~= '' then
-    _username = username
-  end
-  
-  local _userdata = users[username]
+    --start
+    local self = {}
 
-  self.checkPermission= function(permission)
-    if _userdata.id == nil then
-      return false
+    local _permission = 0
+    local _sha2 = require('hash')
+    local _username = 'None'
+    if username ~= nil and username ~= '' then
+        _username = username
     end
-    if bit32.band(permission, _userdata.id) == _userdata.id then
-      return true
-    else
-      return false
+
+    local _userdata = users[username]
+
+    self.checkPermission= function(permission)
+        if _userdata.id == nil then
+            return false
+        end
+        if bit32.band(permission, _userdata.id) == _userdata.id then
+            return true
+        else
+            return false
+        end
     end
-  end
-  
-  self.logIn = function(password)
-    for k, v in pairs(users) do
-      if v.hash == _sha2.hash256(password) then
-        _username = k
-        _userdata = v
-        return true
-      end
-    end 
-    return false
-  end
-  
-  self.logOut = function()
-    _username = 'None'
-    _userdata = users[_username]
-  end
-  
-  self.getUserName = function(permission)
-    if permission == nil then return _username end
-  end
-  
-  return self
-end 
+
+    self.logIn = function(password)
+        for k, v in pairs(users) do
+            if v.hash == _sha2.hash256(password) then
+                _username = k
+                _userdata = v
+                return true
+            end
+        end
+        return false
+    end
+
+    self.logOut = function()
+        _username = 'None'
+        _userdata = users[_username]
+    end
+
+    self.getUserName = function(permission)
+        if permission == nil then return _username end
+    end
+
+    return self
+end
+
+return User

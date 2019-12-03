@@ -1,50 +1,52 @@
-Control = {}
+local Control = {}
 Control.new = function(props)
-  --private members  
-  local self = {}
-  local _className = 'Control'
-  local _visible = true
-  local _enable = true
-  local _focused = false
-  
-  --public members
-  if props ~= nil then
-    for k, v in pairs(props) do
-      self[k] = v
+    --private members
+    local self = {}
+    local _className = 'Control'
+    local _visible = true
+    local _enable = true
+    local _focused = false
+
+    --public members
+    if props ~= nil then
+        for k, v in pairs(props) do
+            self[k] = v
+        end
     end
-  end
 
-  self.getClassName = function()
-    return _className
-  end    
+    self.getClassName = function()
+        return _className
+    end
 
-  self.getAttrName = function(s)
-    return string.match(s, '%%(%w+)%%')
-  end
+    self.getAttrName = function(s)
+        return string.match(s, '%%(%w+)%%')
+    end
 
-  self.getVisible = function()
-    return _visible
-  end
+    self.getVisible = function()
+        return _visible
+    end
 
-  self.setVisible = function(value)
-    if value ~= nil then _visible = value end
-  end
+    self.setVisible = function(value)
+        if value ~= nil then _visible = value end
+    end
 
-  self.getEnable = function()
-    return _enable
-  end
+    self.getEnable = function()
+        return _enable
+    end
 
-  self.setEnable = function(value)
-    if value ~= nil then _enable = value end
-  end
+    self.setEnable = function(value)
+        if value ~= nil then _enable = value end
+    end
 
-  self.isFocused = function()
-    return _focused
-  end
+    self.isFocused = function()
+        return _focused
+    end
 
-  self.setFocused = function(value)
-    if value ~= nil then _focused = value end
-  end
+    self.setFocused = function(value)
+        if value ~= nil then _focused = value end
+    end
 
-  return self
+    return self
 end
+
+return Control

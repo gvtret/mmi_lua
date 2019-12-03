@@ -1,7 +1,7 @@
 require ('Timer')
 local xml2lua = require('xml2lua.xml2lua')
 
-EventProvider = {}
+local EventProvider = {}
 EventProvider.new = function(filename, locale)
   --start
   local self = {}
@@ -113,3 +113,5 @@ EventProvider.new = function(filename, locale)
   --end
   return self  
 end
+
+return EventProvider
