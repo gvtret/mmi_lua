@@ -1,9 +1,9 @@
-require ('Icon')
-require ('Timer')
-require ('Text')
-require ('List')
+local Icon = require ('Icon')
+local Timer = require ('Timer')
+local Text = require ('Text')
+local List =require ('List')
 local User = require ('User')
-require ('Edit')
+local Edit = require ('Edit')
 
 local Application = {}
 Application.new = function(eventProvider, templEngine, connection)

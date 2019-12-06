@@ -1,6 +1,6 @@
 local Control = require('Control')
 
-Icon = {}
+local Icon = {}
 Icon.new = function(props, icon_type)
   --private members
   local self = Control.new(props)
@@ -45,3 +45,5 @@ Icon.new = function(props, icon_type)
   end
   return self
 end
+
+return Icon
