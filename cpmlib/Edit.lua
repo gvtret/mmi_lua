@@ -1,8 +1,8 @@
 --- @module Edit
 -- Edit class.
 -- Class for editable fields with masked support
-require('Control')
-Edit = {}
+local Control = require('cpmlib.Control')
+local Edit = {}
 Edit.new = function(props, haveMask, size)
   -- start
   local self = Control.new(props)
@@ -101,3 +101,5 @@ Edit.new = function(props, haveMask, size)
   -- end
   return self
 end
+
+return Edit

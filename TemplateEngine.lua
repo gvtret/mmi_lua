@@ -1,4 +1,3 @@
-require('List')
 local xml2lua = require('xml2lua.xml2lua')
 local tree = require('xml2lua.xmlhandler.tree')
 

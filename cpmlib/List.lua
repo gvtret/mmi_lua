@@ -1,6 +1,6 @@
 -- List class
-local Control = require("Control")
-require("ListItem")
+local Control = require("cpmlib.Control")
+local ListItem = require("cpmlib.ListItem")
 
 List = {}
 List.new = function(props)

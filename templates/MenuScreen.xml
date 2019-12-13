@@ -1,0 +1,13 @@
+<VBox h="64" w="256">
+	<HBox>
+		<Icon/>
+		<Text algn="center"/>
+		<Icon/>
+	<HBox>
+	<Line/>
+	<List/>
+	<Line/>
+	<HBox>
+		<Text/>
+	</HBox>
+</VBox>
