@@ -1,8 +1,41 @@
 --- @module Edit
 -- Edit class.
 -- Class for editable fields with masked support
-local Control = require('cpmlib.Control')
-local Edit = {}
+local Text = require('cpmlib.Text')
+local Edit = class(Text)
+
+function Edit:init(attrs, logger)
+  Text.init(self, attrs, logger)
+  self._value = ''
+  self._showValue = ''
+  self._maskChar = '*'
+  self._masked = false
+  self._edited = false
+  self._valueType = ''
+  self._currentIndex = 1
+  self._size = 1
+end
+
+function Edit:isEdited()
+  return self._edited
+end
+
+function Edit:setEdited(value)
+  if self._edited ~= value then
+    self._foreground, self._background = self._background, self._foreground
+  end
+  self._edited = value
+end
+
+function Edit:isMasked()
+  return self._masked
+end
+
+function Edit:setMasked(value)
+  self._masked = value
+end
+  
+--[[local Edit = {}
 Edit.new = function(props, haveMask, size)
   -- start
   local self = Control.new(props)
@@ -101,5 +134,5 @@ Edit.new = function(props, haveMask, size)
   -- end
   return self
 end
-
+--]]
 return Edit

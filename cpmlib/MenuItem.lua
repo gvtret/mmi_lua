@@ -1,13 +1,41 @@
--- ListItem class
-local Control = require("cpmlib.Control")
+-- MenuItem class
+local Text = require("cpmlib.Text")
+local MenuItem = class(Text)
 
-ListItem = {}
-ListItem.new = function(props)
+function MenuItem:init(attrs, logger)
+  Text.init(self, attrs, logger)
+  self._selected = false
+  self._caption = ''
+end
+  
+function MenuItem:isSelected()
+  return self._selected
+end
+
+function MenuItem:setSelected(value)
+  if value then
+    self:setText('>'..self._caption)
+  else
+    self:setText(' '..self._caption)
+  end
+  self._selected = value
+end
+
+function MenuItem:setCaption(caption)
+  if caption == nil then return end
+  self._caption = caption
+  self:setSelected(self:isSelected())
+end
+return MenuItem
+
+--[[
+MenuItem = {}
+MenuItem.new = function(props)
   --start
   local self = Control.new(props)
 
   --private members
-  local _className = 'ListItem'
+  local _className = 'MenuItem'
   local _selected = false
   local _maxLen = 63
   
@@ -67,3 +95,4 @@ ListItem.new = function(props)
   -- end
   return self
 end
+--]]

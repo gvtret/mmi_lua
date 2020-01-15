@@ -1,5 +1,5 @@
 #!/bin/bash
 echo 'Timer class tests...'
-lua src/Timer_test.lua
+lua tests/Timer_test.lua
 echo 'EventProvider class tests...'
-lua src/EventProvider_test.lua
+lua tests/EventProvider_test.lua

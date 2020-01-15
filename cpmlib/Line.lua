@@ -2,39 +2,41 @@
 local Control = require ('cpmlib.Control')
 local Line = class (Control)
 
-function Line:init(attrs)
-  Control.init(self, attrs)
+function Line:init(attrs, logger)
+  Control.init(self, attrs, logger)
   self._funcId = 0x01
-  self._r = 0 or attrs.r
-  self._b = 0 or attrs.b
+  self._x1 = 0 or attrs.x1
+  self._y1 = 0 or attrs.y1
+  self._x2 = 0 or attrs.x1
+  self._y2 = 0 or attrs.y1
   self:draw()
 end
 
 function Line:setStart(x, y)
-  self._l = x
-  self._t = y
+  self._x1 = x
+  self._y1 = y
   self:draw()
 end
 
 function Line:getStart()
-  return self._l, self._t
+  return self._x1, self._y1
 end
 
 function Line:setEnd(x, y)
-  self._r = x
-  self._b = y
+  self._x2 = x
+  self._y2 = y
   self:draw()
 end
 
 function Line:getEnd()
-  return self._r, self._b
+  return self._x2, self._y2
 end
 
 function Line:draw()
   self._buffer = struct.pack('BBHHHH', 
                               self._funcId,
-                              bit32.bor(bit32.lshift(self._bg,4), self._fg),
-                              self._l, self._t, self._r, self._b)
+                              bit32.bor(bit32.lshift(self._background,4), self._foreground),
+                              self._x1, self._y1, self._x2, self._y2)
 end
 
 return Line

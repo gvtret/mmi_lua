@@ -1,13 +1,38 @@
-<VBox h="64" w="256">
-	<HBox>
-		<Icon/>
-		<Text algn="center"/>
-		<Icon/>
-	<HBox>
-	<Line/>
-	<List/>
-	<Line/>
-	<HBox>
-		<Text/>
-	</HBox>
-</VBox>
+<?xml version="1.0"?>
+<!--
+Описание атрибутов элемента:
+  left - координата x левого верхнего угла объекта 
+  top - координата y левого верхнего угла объекта
+  width - ширина объекта
+  height - высота объета
+  name - имя объекта из БД (если применимо)
+  halign - выравнивание по горизонтали относительно объекта (left, center, right)
+  valign - выравнивание по вертикали относительно объекта(top, center, bottom)
+  background - градация яркости цвета для заднего фона
+  foreground - градация яркости цвета для переднего фона
+  color - общий цвет (не реализовано)
+-->
+<Template>
+  <VBox id="menuScreen" type="screen" height="64" width="256">
+      <HBox id="mainHeader" type="header" height="11">
+        <Icon id="logoIcon" name="TEL"/>
+        <Text id="caption" halign="center" valign="center"/>
+        <Icon id="operIcon" name="DOOR"/>
+      </HBox>
+      <VBox id="menuFrame" type="frame">
+        <Line id="headerLine" height="5"/>
+        <Menu id="mainMenu"/>
+        <Line id="footerLine" height="5"/>
+      </VBox> 
+      <HBox id="mainFooter" type="footer" height="11">
+        <Text id="status"/>
+      </HBox>
+  </VBox>
+</Template>
+
+<Template>
+  <HBox id="passwordFooter" type="footer">
+    <Text id="promt" halign="left" valign="center"/>
+    <Edit id="password" halign="right" valign="center"/>
+  </HBox>
+</Template>

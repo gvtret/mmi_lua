@@ -1,4 +1,4 @@
-local Icons = {
+Icons = {
   ['EMPTY'] = {
     ['h'] = 11, 
     ['w'] = 16,
@@ -42,40 +42,57 @@ local Icons = {
   ['SYMLR'] = {
     ['h'] = 11, 
     ['w'] = 16,
-    ['data'] = string.char(0x00,0x00,0x04,0x10,0x0C,0x18,0x1C,0x1C,0x3C, 0x1E,0x7C,0x1F,0x3C,0x1E,0x1C,0x1C,0x0C,0x18,0x04,0x10,0x00,0x00)  
+    ['data'] = string.char(0x00,0x00,0x04,0x10,0x0C,0x18,0x1C,0x1C,0x3C,0x1E,0x7C,0x1F,0x3C,0x1E,0x1C,0x1C,0x0C,0x18,0x04,0x10,0x00,0x00)  
   }
 }
 
 local Control = require('cpmlib.Control')
 local Icon = class (Control)
 
-function Icon:init(attrs)
-  Control.init(self, attrs)
+function Icon:init(attrs, logger)
+  Control.init(self, attrs, logger)
   self._funcId = 0x02
-  self._h = self._h or Icons.EMPTY.h
-  self._w = self._w or Icons.EMPTY.w
-  self._data = Icons.EMPTY.data
+  local icon_name = 'EMPTY' or attrs.name
+  self._imageHeight = self._height or Icons[icon_name].h
+  self._imageWidth = self._width or Icons[icon_name].w
+  self._imageData = Icons[icon_name].data
   self:draw()
 end
 
 function Icon:setType(name)
   if name == nil or name == '' then return end
   if Icons[name] == nil then return end
-  self._h = Icons[name].h
-  self._w = Icons[name].w
-  self._data = Icons[name].data
+  self._height = Icons[name].h
+  self._width = Icons[name].w
+  self._imageData = Icons[name].data
   self:draw()
 end
 
 function Icon:draw()
+  local left, top = self:getImagePos()
   self._buffer = struct.pack('BBBBHH',
                               self._funcId,
-                              bit32.bor(bit32.lshift(self._bg,4), self._fg),
-                              self._h,
-                              self._w,
-                              self._l,
-                              self._t)
-  self._buffer = self._buffer..self._data
+                              bit32.bor(bit32.lshift(self._background, 4), self._foreground),
+                              self._height, self._width,
+                              left, top)
+  self._buffer = self._buffer..self._imageData
 end
 
+function Icon:getImagePos()
+  local pos_left = self._left
+  local pos_top = self._top
+  if self._halign == 'center' then
+    pos_left = pos_left + (self._width - self._imageWidth) / 2
+  elseif self.halign == 'right' then 
+    pos_left = pos_left + self._width - self._imageWidth
+  end
+  if self._valign == 'center' then
+    pos_top = pos_top + (self._height - self._imageHeight) / 2
+  elseif self.valign == 'bottom' then 
+    pos_top = pos_top + self._height - self._imageHeight
+  end
+  pos_left = pos_left < self._left and self._left or pos_left
+  pos_top = pos_top < self._top and self._top or pos_top
+  return pos_left, pos_top 
+end
 return Icon

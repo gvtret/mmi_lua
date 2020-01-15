@@ -2,8 +2,8 @@ local struct = require('struct')
 local Fonts = {
   ['5x8'] = {
     ['id'] = 0x08,
-    ['h'] = 8,
-    ['w'] = 5,
+    ['height'] = 8,
+    ['width'] = 5,
     ['data'] = {
       [0x20] = string.char(0x00,0x00,0x00,0x00,0x00),  -- Espace 0x20 --
       [0x21] = string.char(0x00,0x00,0x4f,0x00,0x00),  -- ! --
@@ -173,7 +173,7 @@ local Fonts = {
 
 function Fonts:serialize(name)
   local buff = ''
-  buff = struct.pack('BBB', self[name].id, self[name].h, self[name].w)
+  buff = struct.pack('BBB', self[name].id, self[name].height, self[name].width)
   for k, v in pairs(self[name].data) do
     buff = buff..string.char(k)..v
   end

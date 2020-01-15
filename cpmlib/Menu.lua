@@ -1,14 +1,69 @@
--- List class
-local Control = require("cpmlib.Control")
-local ListItem = require("cpmlib.ListItem")
+-- Menu class
+local Control = require('cpmlib.Control')
+local MenuItem = require('cpmlib.MenuItem')
+local Menu = class(Control)
 
-List = {}
-List.new = function(props)
+function Menu:init(attrs, logger)
+  Control.init(self, attrs, logger)
+  self._items = {}
+  self._visibleItems = {}
+  self._selectedIndex = 0
+  self._firstIndex = 1
+  self._lastIndex = 4
+end
+
+function Menu:getItem(index)
+  if index > #self._items or index == 0 then return end
+  return self._items[index]
+end
+
+function Menu:append(item)
+  if not item:is_a(MenuItem) then return end
+  table.insert(self._items, item)
+end
+
+function Menu:insert(item, index)
+  if not item:is_a(MenuItem) then return end
+  if index > #self._items or index == 0 then return end
+  table.insert(self._items, index, item)
+end
+
+function Menu:getSelectedIndex()
+  return self._selectedIndex
+end
+
+function Menu:getSelectedItem()
+  return self._items[self:getSelectedIndex()]
+end
+
+function Menu:onMoveDown(sender)
+  self:getSelectedItem():setSelected(false)
+  self._selectedIndex = self._selectedIndex == #self._items and 
+                        self._selectedIndex or 
+                        self._selectedIndex + 1
+  self:getSelectedItem():setSelected(true)
+  if self._selectedIndex > self._lastIndex then
+    
+  end
+end
+
+function Menu:onMoveUp(sender)
+  self:getSelectedItem():setSelected(false)
+  self._selectedIndex = self._selectedIndex == 0 and
+                        self._selectedIndex or
+                        self._selectedIndex - 1
+  self:getSelectedItem():setSelected(true)
+end
+
+return Menu
+--[[
+Menu = {}
+Menu.new = function(props)
   --start
   local self = Control.new(props)
   
   --private members
-  local _className = 'List'
+  local _className = 'Menu'
   local _items = {} --Menu items.
   local _visibleItems = {} --"window" of visible items
   local _minIndex = 1
@@ -32,18 +87,7 @@ List.new = function(props)
   end
 
   --public members
-  self.getItem = function(index)
-    return _items[index]
-  end
-  
-  self.getSelectedIndex = function()
-    return _selectedIndex
-  end
-  
-  self.getSelectedItem = function()
-    return self.getItem(self.getSelectedIndex())
-  end
-    
+
   self.make = function(templ, object)
     for _k, _v in pairs(templ._attr) do
       local attr_name = self.getAttrName(_v)
@@ -57,7 +101,7 @@ List.new = function(props)
     local _itemsData = _getItemsData(object)
     local _itemTempl = templ.Row
     for _i = 1, #_itemsData do
-      local _listItem = ListItem.new();
+      local _listItem = MenuItem.new();
       _listItem.make(_itemTempl, _itemsData[_i])
       _items[_i] = _listItem;
     end
@@ -139,7 +183,7 @@ List.new = function(props)
   --end
   return self
 end
-
+--]]
 
 
 

@@ -1,4 +1,4 @@
-local Timer = require ('Timer')
+local Timer = require ('cpmlib.Timer')
 local xml2lua = require('xml2lua.xml2lua')
 
 local EventProvider = {}

@@ -1,5 +1,5 @@
-local Timer = require ('Timer')
-local User = require ('User')
+local Timer = require ('cpmlib.Timer')
+local User = require ('cpmlib.User')
 
 local Application = {}
 Application.new = function(eventProvider, templEngine, connection)
@@ -15,7 +15,7 @@ Application.new = function(eventProvider, templEngine, connection)
   local _eventProvider = eventProvider
   local _templEngine = templEngine
   local _connection = connection
-  local _user = User.new('None')
+  local _user = User('None')
   local _controlStack = {}
   local _timers = {}
   local _screen = {
