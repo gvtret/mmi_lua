@@ -84,7 +84,7 @@ function Control:setVisible(value)
     self._logger:print(2, 'value not specified.')
     return
   end
-  self._visible = value
+  self:setProperty('visible', value)
 end
 
 function Control:getEnable()
@@ -96,7 +96,7 @@ function Control:setEnable(value)
     self._logger:print(2, 'value not specified.')
     return
   end
-  self._enable = value
+  self:setProperty('enable', value)
 end
 
 function Control:isFocused()
@@ -108,15 +108,15 @@ function Control:setFocused(value)
     self._logger:print(2, 'value not specified.')
     return
   end
-  self._focused = value
+  self:setProperty('focused', value)
 end
 
-function Control:setForeground(brightness)
-  if brightness == nil then
+function Control:setForeground(value)
+  if value == nil then
     self._logger:print(2, 'brightness not specified.')
     return
   end
-  self._foreground = brightness
+  self:setProperty('foreground', value)
   self:draw()
 end
 
@@ -124,12 +124,12 @@ function Control:getForeground()
   return self._foreground
 end
 
-function Control:setBackground(brightness)
+function Control:setBackground(value)
   if brightness == nil then
     self._logger:print(2, 'brightness not specified.')
     return
   end
-  self._background = brightness
+  self:setProperty('background', value)
   self:draw()
 end
 
@@ -137,20 +137,20 @@ function Control:getBackground()
   return self._background
 end
 
-function Control:setParent(parent)
+function Control:setParent(value)
   if parent == nil then
     self._logger:print(2, 'parent not specified.')
     return
   end
-  self._parent = parent
+  self:setProperty('parent', value)
 end
 
-function Control:setWidth(width)
-  if width == nil then
+function Control:setWidth(value)
+  if value == nil then
     self._logger:print(2, 'width not specified.')
     return
   end
-  self._width = width
+  self:setProperty('width', value)
   self:draw()
 end
 
@@ -158,12 +158,12 @@ function Control:getWidth()
   return self._width
 end
 
-function Control:setHeight(height)
-  if height == nil then
+function Control:setHeight(value)
+  if value == nil then
     self._logger:print(2, 'height not specified.')
     return
   end
-  self._height = height
+  self:setProperty('height', value)
   self:draw()
 end
 
@@ -177,8 +177,8 @@ function Control:setSize(width, height)
       self._logger:print(2, 'width or height not specified.')
     return
   end
-  self._width = width
-  self._height = height
+  self:setProperty('width', width)
+  self:setProperty('height', height)
     self:draw()
 end
 
@@ -191,8 +191,8 @@ function Control:setPos(left, top)
     self._logger:print(2, 'left or top not specified.')
     return
   end
-  self._left = left
-  self._top = top
+  self:setProperty('left', left)
+  self:setProperty('top', top)
   self:draw()
 end
 
@@ -200,13 +200,13 @@ function Control:getPos()
   return self._left, self._top
 end
 
-function Control:setAlign(halign, valign)
+function Control:setAlign(valign, halign)
   if valign == nil and halign == nil then
     self._logger:print(2, 'valign and halign not specified.')
     return
   end
-  if valign ~= nil then self._valign = valign end
-  if halign ~= nil then self._halign = halign end
+  self:setProperty('valign', valign)
+  self:setProperty('halign', halign)
   self:draw()
 end
 

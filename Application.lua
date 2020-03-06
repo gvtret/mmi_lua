@@ -1,7 +1,25 @@
 local Timer = require ('cpmlib.Timer')
 local User = require ('cpmlib.User')
 
-local Application = {}
+local Application = class()
+
+function Application:init()
+    self._logger = cpmlib.Log()
+    self._running = true
+    self._user = User('None')
+    self._timers = {}
+end
+
+function Application:_updateTimers()
+  for _, _v in pairs(self._timers) do _v.update() end
+end
+
+function Application:_checkTimers(skip_timer)
+  for k, v in pairs(self._timers) do
+    if k ~= skip_timer then v.stop() end
+  end
+end 
+--[[local Application = {}
 Application.new = function(eventProvider, templEngine, connection)
   --start
   local self = {}
@@ -28,10 +46,6 @@ Application.new = function(eventProvider, templEngine, connection)
   local _setDateTime = true
   local _objectPool = {}
 
-  local _updateTimers = function()
-    for _, _v in pairs(_timers) do _v.update() end
-  end
-
   local _draw = function()
   end
   
@@ -43,11 +57,6 @@ Application.new = function(eventProvider, templEngine, connection)
     end
   end
   
-  self._checkTimers = function(skip_timer)
-    for k, v in pairs(_timers) do
-      if k ~= skip_timer then v.stop() end
-    end
-  end 
   
   self._inObjectPool = function(object_name)
     for k, v in pairs(_objectPool) do
@@ -279,7 +288,7 @@ Application.new = function(eventProvider, templEngine, connection)
   --end
   return self
 end
-
+--]]
 return Application
 
 

@@ -70,12 +70,8 @@ end
 
 function Icon:draw()
   local left, top = self:getImagePos()
-  self._buffer = struct.pack('BBBBHH',
-                              self._funcId,
-                              bit32.bor(bit32.lshift(self._background, 4), self._foreground),
-                              self._height, self._width,
-                              left, top)
-  self._buffer = self._buffer..self._imageData
+  cpm.drawIcon(self._funcId, bit32.bor(bit32.lshift(self._background, 4), self._foreground),
+                self._height, self._width, left, top, self._imageData)
 end
 
 function Icon:getImagePos()

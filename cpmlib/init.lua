@@ -17,5 +17,6 @@ _M.Stack = require('cpmlib.Stack')
 _M.Queue = require('cpmlib.Queue')
 _M.Log = require('cpmlib.Log')
 _M.Builder = require('cpmlib.Builder')
+_M.EventProvider = require('cpmlib.EventProvider')
 return _M
 

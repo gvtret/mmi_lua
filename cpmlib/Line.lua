@@ -1,4 +1,5 @@
 -- Line class
+local cpm = require('cpm.cpm')
 local Control = require ('cpmlib.Control')
 local Line = class (Control)
 
@@ -13,8 +14,8 @@ function Line:init(attrs, logger)
 end
 
 function Line:setStart(x, y)
-  self._x1 = x
-  self._y1 = y
+  self:setProperty('x1', x)
+  self:setProperty('y1', y)
   self:draw()
 end
 
@@ -23,8 +24,8 @@ function Line:getStart()
 end
 
 function Line:setEnd(x, y)
-  self._x2 = x
-  self._y2 = y
+  self:setProperty('x2', x)
+  self:setProperty('y2', y)
   self:draw()
 end
 
@@ -33,10 +34,8 @@ function Line:getEnd()
 end
 
 function Line:draw()
-  self._buffer = struct.pack('BBHHHH', 
-                              self._funcId,
-                              bit32.bor(bit32.lshift(self._background,4), self._foreground),
-                              self._x1, self._y1, self._x2, self._y2)
+  cpm.drawLine(self._funcId, bit32.bor(bit32.lshift(self._background,4), self._foreground),
+                self._x1, self._y1, self._x2, self._y2)
 end
 
 return Line

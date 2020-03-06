@@ -1,4 +1,4 @@
-struct = require('struct')
+struct = require('structlib.struct')
 
 function string.fromhex(str)
     return (str:gsub('..', function (cc)

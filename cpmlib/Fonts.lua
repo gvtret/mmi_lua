@@ -1,4 +1,4 @@
-local struct = require('struct')
+local struct = require('structlib.struct')
 local Fonts = {
   ['5x8'] = {
     ['id'] = 0x08,

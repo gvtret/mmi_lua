@@ -1,11 +1,14 @@
 require "CiderDebugger";
-TESTS = false
+TESTS = true
 
-package.path = './?.lua;./?/init.lua'
-package.cpath = './clibs/?.so;./?.so'
+package.path = package.path..';./?.lua;./?/init.lua'
+package.cpath = package.cpath..';./clibs/?.so;./?.so'
 
 cpmlib = require('cpmlib') -- load framework
-if TESTS then require('tests') end
+if TESTS then 
+    require('tests') 
+    return
+end
 local Application = require ('Application')
 local EventProvider = require ('EventProvider')
 local TemplateEngine = require ('TemplateEngine')

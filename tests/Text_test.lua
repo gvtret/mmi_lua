@@ -1,26 +1,51 @@
-package.path = package.path..';./src/?.lua'..';./src/xml2lua/?.lua'..';./src/u-test/?.lua'
-require('Text')
 local test = require ('u-test.u-test')
-local text = Text()
+local text = cpmlib.Text({}, cpmlib.Log())
 
 test.Text.start_up = function ()
-    text.value = 'some text'
+    text:setProperty('width', 256)
+    text:setProperty('height', 10)
 end
 
-test.Text.test_size = function ()
-    text.align = 'left'
-    test.equal(#text:draw()[1], text.max_size)
-    text.align = 'center'
-    test.equal(#text:draw()[1], text.max_size)
-    text.align = 'right'
-    test.equal(#text:draw()[1], text.max_size)
+test.Text.test_setText = function()
+    text:setText('some text')
+    test.equal(text._text, 'some text')
 end
 
-test.Text.test_match = function()
-    text.align = 'left'
-    test.equal(text:draw()[1], 'some text                                           ')
-    text.align = 'center'
-    test.equal(text:draw()[1], '                     some text                      ')
-    text.align = 'right'
-    test.equal(text:draw()[1], '                                           some text')
+test.Text.test_setAlign = function ()
+    text:setAlign('top', 'left')
+    local left, top = text:getTextPos()
+    test.equal(top, 0)
+    test.equal(left, 0)
+    text:setAlign('center', 'left')
+    left, top = text:getTextPos()
+    test.equal(top, 1)
+    test.equal(left, 0)
+    text:setAlign('bottom', 'left')
+    left, top = text:getTextPos()
+    test.equal(top, 2)
+    test.equal(left, 0)
+    text:setAlign('top', 'center')
+    left, top = text:getTextPos()
+    test.equal(top, 0)
+    test.equal(left, 101)
+    text:setAlign('center', 'center')
+    left, top = text:getTextPos()
+    test.equal(top, 1)
+    test.equal(left, 101)
+    text:setAlign('bottom', 'center')
+    left, top = text:getTextPos()
+    test.equal(top, 2)
+    test.equal(left, 101)
+    text:setAlign('top', 'right')
+    left, top = text:getTextPos()
+    test.equal(top, 0)
+    test.equal(left, 202)
+    text:setAlign('center', 'right')
+    left, top = text:getTextPos()
+    test.equal(top, 1)
+    test.equal(left, 202)
+    text:setAlign('bottom', 'right')
+    left, top = text:getTextPos()
+    test.equal(top, 2)
+    test.equal(left, 202)
 end
